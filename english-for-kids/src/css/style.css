@@ -1,0 +1,304 @@
+body {
+    margin: 0;
+}
+
+.overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: 0.7s ease all;
+}
+
+.hidden {
+    display: none;
+}
+
+header {
+    padding-top: 40px;
+    max-width: 1020px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    width: 300px;
+    height: 280px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    background: linear-gradient(180deg,#e076c0,#f7dcf4 50%,#fff 0,#fff);
+    cursor: pointer; 
+    flex-direction: column;
+    font-family: Roboto;
+    text-align: center;
+    z-index: 1;
+    margin: 20px;
+}
+
+.card:hover, .section-card:hover  {
+    box-shadow: 0 10px 20px rgba(0,0,0,.4);
+}
+
+.card__img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 10px solid white;
+    margin: 50px auto 10px;
+    object-fit: cover;
+}
+
+h2 {
+    margin: 0;
+}
+
+/* hamburger */
+.hamburger {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: left 0.3s;
+}
+
+.hamburger__icon {
+    position: relative;
+    width: 30px;
+    height: 5px;
+    background-color: #cdcdcd;
+}
+
+.hamburger__icon::before {
+    position: absolute;
+    left: 0;
+    top: -10px;
+    content: '';
+    width: 30px;
+    height: 5px;
+    background-color: #cdcdcd;
+    transition: transform 0.2s ease-in, top 0.2s linear 0.2s;
+
+}
+
+.hamburger__icon::after {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    content: '';
+    width: 30px;
+    height: 5px;
+    background-color: #cdcdcd;
+    transition: transform 0.2s ease-in, top 0.2s linear 0.2s;
+}
+
+.hamburger__icon.hamburger__icon-active {
+    background-color: transparent;
+}
+
+.hamburger__icon.hamburger__icon-active::before {
+    transform: rotate(45deg);
+    top: 0;
+    transition: top 0.2s linear, transform 0.2s ease-in 0.2s;
+}
+
+.hamburger__icon.hamburger__icon-active::after {
+    transform: rotate(-45deg);
+    top: 0;
+    transition: top 0.2s linear, transform 0.2s ease-in 0.2s;
+}
+
+/*toggle-button*/
+.toggle-button-cover
+{
+    position: relative;
+    width: 74px;
+    height: 36px;
+}
+
+.button-cover
+{
+    height: 36px;
+    width: 74px;
+}
+
+.button-cover, .knobs, .layer
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.button
+{
+    position: relative;
+    top: 50%;
+    width: 74px;
+    height: 36px;
+    margin: -20px auto 0 auto;
+    overflow: hidden;
+}
+
+.button.r, .button.r .layer
+{
+    border-radius: 5px;
+}
+
+.button.b2
+{
+    border-radius: 2px;
+}
+
+.checkbox
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.knobs
+{
+    z-index: 2;
+}
+
+.layer
+{
+    width: 100%;
+    background-color: #f38cda54;
+    transition: 0.3s ease all;
+    z-index: 1;
+}
+
+/* Button 1 */
+#button-1 .knobs:before
+{
+    content: 'TRAIN';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 30px;
+    height: 10px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 9px 4px;
+    background-color: #f38cda;
+    border-radius: 5px;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
+
+#button-1 .checkbox:checked + .knobs:before
+{
+    content: 'PLAY';
+    left: 32px;
+    background-color: #b46ac3;
+}
+
+#button-1 .checkbox:checked ~ .layer
+{
+    background-color: #b46ac363;
+}
+
+#button-1 .knobs, #button-1 .knobs:before, #button-1 .layer
+{
+    transition: 0.3s ease all;
+}
+
+/*menu*/
+#menu {
+    position: absolute;
+    box-sizing: border-box;
+    width: 380px;
+    height: calc(100vh + 22px);
+    margin: 0;
+    padding: 125px 50px 50px;
+    left: -100%;
+    top: 0;
+    list-style-type: none;
+    background-color: #f38cda;
+    z-index: 8;
+    font-size: 24px;
+    color: white;
+    transition: 0.7s ease all;
+}
+
+#menu li {
+    padding: 10px 0 0 55px;
+    cursor: pointer;
+}
+
+.menu__link {
+    text-decoration: none;
+    color: white;
+}
+
+#menu li a:hover{
+    color: #cdcdcd;
+}
+
+.active {
+    color: #cdcdcd;
+}
+
+main {
+    padding: 50px 0;
+    max-width: 1060px;
+    margin: 0 auto;
+}
+
+.to-right {
+    animation-name: right;
+    animation-direction: reverse;
+}
+
+@keyframes right {
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+#menu.to-right {
+    left: 0;
+}
+
+.main-page, .section-page {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.main-page.hidden, .section-page.hidden {
+    display: none;
+}
+
+.wrapper-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #d5d5d5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
