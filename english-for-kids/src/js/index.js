@@ -12,6 +12,7 @@ const LINKS = document.querySelectorAll('#menu li a');
 const SWITCH = document.querySelector('.toggle-button-cover');
 
 let isPlay = false;
+let page = 0;
 
 const toggleMenu = () => {
   document.querySelector('.hamburger__icon').classList.toggle('hamburger__icon-active');
@@ -31,10 +32,23 @@ const togglePages = () => {
   MAIN_PAGE.classList.toggle('hidden');
   SECTION_PAGE.classList.toggle('hidden');
 }
+const toggleModes = () => {
+  SECTION_PAGE.querySelectorAll('.section-card').forEach((el) => {
+    el.classList.toggle('play-card');
+    el.querySelector('.word').classList.toggle('none');
+    el.querySelector('.rotation').classList.toggle('none');
+  });
+}
 
 SWITCH.addEventListener('click', () => {
   isPlay = !isPlay;
-
+  MENU.classList.toggle('violet');
+  document.querySelectorAll('.card').forEach((el) => {
+    el.classList.toggle('violet');
+  });
+  if(page) {
+    toggleModes();
+  }
 })
 
 const renderCategoryCards = ind => {
@@ -51,12 +65,17 @@ const renderCategoryCards = ind => {
                                 <h2 class="word">${el.translation}</h2>
                             </div>
                          </div>`; 
+
     newCard.querySelector('.front').addEventListener("click", (event) => {
       if(!event.target.classList.contains('rotation'))
       audio.play();
     });                    
     SECTION_PAGE.append(newCard);
   });
+
+  if(isPlay) {
+    toggleModes();
+  }
 }
 
 MENU.addEventListener('click', event => {
@@ -66,6 +85,9 @@ MENU.addEventListener('click', event => {
     toggleMenu();
     
     const ind = Array.from(LINKS).indexOf(event.target);
+    page = ind;
+    console.log(page);
+
     if(!MAIN_PAGE.classList.contains('hidden')) {
       if(ind !== 0) {
         togglePages();
@@ -90,6 +112,8 @@ MAIN_PAGE.addEventListener('click', (event) => {
 
   const ind = Array.from(document.querySelectorAll('.card')).indexOf(event.target) + 1;
   renderCategoryCards(ind);
+  page = ind;
+  console.log(page);
 
   MENU.querySelectorAll('a').forEach(elem => elem.classList.remove('active'));
   MENU.querySelector(`li:nth-child(${ind+1}) a`).classList.add('active');

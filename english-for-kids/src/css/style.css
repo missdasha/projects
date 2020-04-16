@@ -40,6 +40,10 @@ header {
     margin: 20px;
 }
 
+.card.violet {
+    background: linear-gradient(180deg,#b348af,#f7dcf4 50%,#fff 0,#fff);
+}
+
 .card:hover, .section-card:hover  {
     box-shadow: 0 10px 20px rgba(0,0,0,.4);
 }
@@ -221,6 +225,10 @@ h2 {
     transition: 0.7s ease all;
 }
 
+#menu.violet {
+    background-color: #b46ac3;
+}
+
 #menu li {
     padding: 10px 0 0 55px;
     cursor: pointer;
@@ -332,4 +340,19 @@ main {
 
 .translate {
     transform: rotateY(180deg);
+}
+
+.none {
+    box-sizing: border-box;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.play-card .back, .play-card .front {
+    background-size: cover;
+    background-position: 50%;
 }
