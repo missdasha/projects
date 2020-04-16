@@ -9,6 +9,9 @@ const MAIN_PAGE = document.querySelector('.main-page');
 const MENU = document.querySelector('#menu');
 const SECTION_PAGE = document.querySelector('.section-page');
 const LINKS = document.querySelectorAll('#menu li a');
+const SWITCH = document.querySelector('.toggle-button-cover');
+
+let isPlay = false;
 
 const toggleMenu = () => {
   document.querySelector('.hamburger__icon').classList.toggle('hamburger__icon-active');
@@ -29,14 +32,27 @@ const togglePages = () => {
   SECTION_PAGE.classList.toggle('hidden');
 }
 
+SWITCH.addEventListener('click', () => {
+  isPlay = !isPlay;
+
+})
+
 const renderCategoryCards = ind => {
   cards[ind].forEach(el => {
     const audio = new Audio(`https://wooordhunt.ru/data/sound/word/us/mp3/${el.word}.mp3`);
     const newCard = document.createElement('div');
-    newCard.className = 'card';
-    newCard.innerHTML = `<img class="card__img" src='${el.image}'>
-                        <h2>${el.word}</h2>`; 
-    newCard.addEventListener("click", () => {
+    newCard.className = 'card-container';
+    newCard.innerHTML = `<div class="section-card">
+                            <div class="front" style="background-image: url('${el.image}');">
+                                <h2 class="word">${el.word}</h2>
+                                <div class="rotation" style="background-image: url('img/rotate.png');"></div>
+                            </div>
+                            <div class="back" style="background-image: url('${el.image}');">
+                                <h2 class="word">${el.translation}</h2>
+                            </div>
+                         </div>`; 
+    newCard.querySelector('.front').addEventListener("click", (event) => {
+      if(!event.target.classList.contains('rotation'))
       audio.play();
     });                    
     SECTION_PAGE.append(newCard);
@@ -78,5 +94,14 @@ MAIN_PAGE.addEventListener('click', (event) => {
   MENU.querySelectorAll('a').forEach(elem => elem.classList.remove('active'));
   MENU.querySelector(`li:nth-child(${ind+1}) a`).classList.add('active');
  }
+})
+
+SECTION_PAGE.addEventListener('click', (event) => {
+  if(event.target.classList.contains('rotation')) {
+    event.target.closest('.section-card').classList.add('translate');
+    event.target.closest('.section-card').addEventListener('mouseleave', ()=> {
+      event.target.closest('.section-card').classList.remove('translate');
+  })
+  }
 })
 
