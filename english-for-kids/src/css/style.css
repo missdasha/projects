@@ -350,9 +350,41 @@ main {
     font-size: 0;
     margin: 0;
     padding: 0;
+    display: none;
 }
 
 .play-card .back, .play-card .front {
     background-size: cover;
     background-position: 50%;
+}
+
+.buttons-play {
+    width: 100%;
+    text-align: center;
+}
+
+.btn-start {
+    box-sizing: border-box;
+    /*padding: 15px 25px;*/
+    height: 60px;
+    font-size: 24px;
+    margin: 20px auto;
+    width: 300px;
+    background: linear-gradient(45deg,#b348af,#f7dcf4 100%,#fff 0,#fff);
+    color: #fff;
+    border-radius: 10px;
+    outline: 0;
+    border-width: 1px;
+    transition: .3s;
+}
+
+.btn-repeat{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: 32px 32px,cover;
+    background-position: 50%;
+    margin: 20px auto;
+    outline: 0;
 }

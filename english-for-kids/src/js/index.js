@@ -10,6 +10,7 @@ const MENU = document.querySelector('#menu');
 const SECTION_PAGE = document.querySelector('.section-page');
 const LINKS = document.querySelectorAll('#menu li a');
 const SWITCH = document.querySelector('.toggle-button-cover');
+const BUTTON_START = document.querySelector('.btn-start');
 
 let isPlay = false;
 let page = 0;
@@ -32,12 +33,14 @@ const togglePages = () => {
   MAIN_PAGE.classList.toggle('hidden');
   SECTION_PAGE.classList.toggle('hidden');
 }
+
 const toggleModes = () => {
   SECTION_PAGE.querySelectorAll('.section-card').forEach((el) => {
     el.classList.toggle('play-card');
     el.querySelector('.word').classList.toggle('none');
     el.querySelector('.rotation').classList.toggle('none');
   });
+  BUTTON_START.classList.toggle('none');
 }
 
 SWITCH.addEventListener('click', () => {
@@ -86,9 +89,8 @@ MENU.addEventListener('click', event => {
     
     const ind = Array.from(LINKS).indexOf(event.target);
     page = ind;
-    console.log(page);
 
-    if(!MAIN_PAGE.classList.contains('hidden')) {
+    if(!MAIN_PAGE.classList.contains('hidden')) { //if the user is on the main page
       if(ind !== 0) {
         togglePages();
         renderCategoryCards(ind);
@@ -98,9 +100,15 @@ MENU.addEventListener('click', event => {
       SECTION_PAGE.innerHTML = '';
       if(ind !== 0) {
           renderCategoryCards(ind);
+          if(isPlay) {
+            BUTTON_START.classList.remove('none');
+          }
       }
       else {
         togglePages();
+        if(isPlay) {
+          BUTTON_START.classList.add('none');
+        }
       }
     }
   }
@@ -113,7 +121,6 @@ MAIN_PAGE.addEventListener('click', (event) => {
   const ind = Array.from(document.querySelectorAll('.card')).indexOf(event.target) + 1;
   renderCategoryCards(ind);
   page = ind;
-  console.log(page);
 
   MENU.querySelectorAll('a').forEach(elem => elem.classList.remove('active'));
   MENU.querySelector(`li:nth-child(${ind+1}) a`).classList.add('active');
@@ -121,10 +128,12 @@ MAIN_PAGE.addEventListener('click', (event) => {
 })
 
 SECTION_PAGE.addEventListener('click', (event) => {
+  console.log(event.target);
   if(event.target.classList.contains('rotation')) {
-    event.target.closest('.section-card').classList.add('translate');
-    event.target.closest('.section-card').addEventListener('mouseleave', ()=> {
-      event.target.closest('.section-card').classList.remove('translate');
+    const closest = event.target.closest('.section-card');
+    closest.classList.add('translate');
+    closest.addEventListener('mouseleave', ()=> {
+      closest.classList.remove('translate');
   })
   }
 })
