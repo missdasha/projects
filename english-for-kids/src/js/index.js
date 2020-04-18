@@ -46,19 +46,11 @@ const toggleModes = () => {
     el.querySelector('.word').classList.toggle('none');
     el.querySelector('.rotation').classList.toggle('none');
   });
-  BUTTON_START.classList.toggle('none');
-}
-
-SWITCH.addEventListener('click', () => {
-  isPlay = !isPlay;
-  MENU.classList.toggle('violet');
-  document.querySelectorAll('.card').forEach((el) => {
-    el.classList.toggle('violet');
-  });
-  if(page) {
-    toggleModes();
+  if(words.length === 0) {
+    BUTTON_START.classList.toggle('none');
   }
-})
+
+}
 
 const renderCategoryCards = ind => {
   cards[ind].forEach(el => {
@@ -90,6 +82,31 @@ const renderCategoryCards = ind => {
   }
 }
 
+const interruptGame = () => {
+  RATING.innerHTML = "";
+  RATING.style.justifyContent = '';
+  BUTTON_REPEAT.classList.toggle('none');
+  SECTION_PAGE.innerHTML = "";
+  // renderCategoryCards(page);
+  words = [];
+}
+
+SWITCH.addEventListener('click', () => {
+  isPlay = !isPlay;
+  MENU.classList.toggle('violet');
+  document.querySelectorAll('.card').forEach((el) => {
+    el.classList.toggle('violet');
+  });
+  if(page) {
+    toggleModes();
+  }
+  if(words.length !== 0) {
+    interruptGame();
+    renderCategoryCards(page);
+  }
+})
+
+
 MENU.addEventListener('click', event => {
   if(event.target.classList.contains('menu__link')) {
     LINKS.forEach(elem => elem.classList.remove('active'));
@@ -107,6 +124,9 @@ MENU.addEventListener('click', event => {
     }
     else {
       SECTION_PAGE.innerHTML = '';
+      if(words.length !== 0) {
+        interruptGame(); 
+      }
       if(ind !== 0) {
           renderCategoryCards(ind);
           if(isPlay) {
@@ -195,8 +215,8 @@ const finishGame = (str) => {
 }
 
 const playResult = str => {
-  let audio;
-  switch (str) {
+  const audio = new Audio(soundPath(`./${str}.mp3`));
+  /* switch (str) {
     case 'failure':
       audio = new Audio(soundPath(`./${str}.mp3`));
       break;
@@ -205,7 +225,7 @@ const playResult = str => {
       break;
     default:
       break;
-  }
+  } */
   audio.play();
   setTimeout(() => finishGame(str), 3000);
 }
