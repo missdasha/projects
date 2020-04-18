@@ -1,5 +1,8 @@
 body {
     margin: 0;
+    background-repeat: no-repeat;
+    background-position: center 180px;
+    overflow-x: hidden;
 }
 
 .overlay {
@@ -356,6 +359,7 @@ main {
 .play-card .back, .play-card .front {
     background-size: cover;
     background-position: 50%;
+    cursor: pointer;
 }
 
 .buttons-play {
@@ -365,7 +369,6 @@ main {
 
 .btn-start {
     box-sizing: border-box;
-    /*padding: 15px 25px;*/
     height: 60px;
     font-size: 24px;
     margin: 20px auto;
@@ -376,6 +379,7 @@ main {
     outline: 0;
     border-width: 1px;
     transition: .3s;
+    cursor: pointer;
 }
 
 .btn-repeat{
@@ -387,4 +391,54 @@ main {
     background-position: 50%;
     margin: 20px auto;
     outline: 0;
+    background-image: url("../img/repeat.svg");
+    cursor: pointer;
+}
+
+.front.guessed {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.rating {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 1350px;
+    margin: 0 auto;
+    height: 40px;
+    overflow-x: hidden;
+    line-height: 36px;
+    font-size: 36px;
+    color: #fc6262;
+}
+
+.star-correct {
+    background-image: url("../img/star-win.png");
+}
+
+.star-error {
+    background-image: url("../img/star.png");
+}
+
+.star-correct, .star-error {
+    flex-shrink: 0;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    background-size: 40px 40px;
+}
+
+.success {
+    background-image: url("../img/success.jpg");
+}
+
+.failure {
+    background-image: url("../img/failure.jpg");
+}
+
+.success, .failure {
+    background-repeat: no-repeat;
+    background-position: center 180px;
+    overflow-x: hidden;
 }
