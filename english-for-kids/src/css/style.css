@@ -22,7 +22,8 @@ body {
 }
 
 header {
-    padding-top: 40px;
+    box-sizing: border-box;
+    padding: 40px 20px 0;
     max-width: 1020px;
     margin: 0 auto;
     display: flex;
@@ -80,7 +81,7 @@ h2 {
     position: relative;
     width: 30px;
     height: 5px;
-    background-color: #cdcdcd;
+    background-color: #000000ba;
 }
 
 .hamburger__icon::before {
@@ -90,7 +91,7 @@ h2 {
     content: '';
     width: 30px;
     height: 5px;
-    background-color: #cdcdcd;
+    background-color: #000000ba;
     transition: transform 0.2s ease-in, top 0.2s linear 0.2s;
 
 }
@@ -102,7 +103,7 @@ h2 {
     content: '';
     width: 30px;
     height: 5px;
-    background-color: #cdcdcd;
+    background-color: #000000ba;
     transition: transform 0.2s ease-in, top 0.2s linear 0.2s;
 }
 
@@ -125,13 +126,13 @@ h2 {
 /*toggle-button*/
 .toggle-button-cover {
     position: relative;
-    width: 74px;
-    height: 36px;
+    width: 94px;
+    height: 40px;
 }
 
 .button-cover {
-    height: 36px;
-    width: 74px;
+    height: 40px;
+    width: 94px;
 }
 
 .button-cover, .knobs, .layer {
@@ -145,8 +146,8 @@ h2 {
 .button-switch {
     position: relative;
     top: 50%;
-    width: 74px;
-    height: 36px;
+    width: 94px;
+    height: 40px;
     margin: -20px auto 0 auto;
     overflow: hidden;
 }
@@ -181,12 +182,12 @@ h2 {
 .button-switch .knobs:before {
     content: 'TRAIN';
     position: absolute;
-    top: 4px;
+    top: 3px;
     left: 4px;
-    width: 30px;
-    height: 10px;
+    width: 40px;
+    height: 15px;
     color: #fff;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: bold;
     text-align: center;
     line-height: 1;
@@ -198,7 +199,7 @@ h2 {
 
 .button-switch .checkbox:checked + .knobs:before {
     content: 'PLAY';
-    left: 32px;
+    left: 42px;
     background-color: #b46ac3;
 }
 
@@ -214,7 +215,7 @@ h2 {
 #menu {
     position: absolute;
     box-sizing: border-box;
-    width: 380px;
+    width: 375px;
     height: calc(100vh + 22px);
     margin: 0;
     padding: 125px 50px 50px;
@@ -247,11 +248,11 @@ h2 {
 }
 
 .active {
-    color: #cdcdcd;
+    color: #000000ba;
 }
 
 main {
-    padding: 50px 0;
+    padding: 20px 0;
     max-width: 1060px;
     margin: 0 auto;
 }
@@ -276,7 +277,7 @@ main {
 
 .main-page, .section-page {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -405,7 +406,7 @@ main {
     justify-content: flex-end;
     width: 100%;
     max-width: 1350px;
-    margin: 0 auto;
+    margin: 20px auto;
     height: 40px;
     overflow-x: hidden;
     line-height: 36px;
@@ -441,4 +442,44 @@ main {
     background-repeat: no-repeat;
     background-position: center 180px;
     overflow-x: hidden;
+}
+ 
+@media (max-width: 1019px) {
+    header {
+        max-width: 677px;
+    }
+}
+
+@media (max-width: 767px) {
+    header {
+        max-width: 340px;
+    }
+
+    .main-page, .section-page {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 374px) {
+    body {
+        background-size: 300px 300px;
+    }
+
+    header {
+        max-width: 340px;
+        padding: 40px 10px 0;
+    }
+
+    #menu {
+        width: 100%;
+    }
+
+    #menu li {
+        padding-left: 35px;
+    }
+
+    .card, .section-card {
+        margin: 20px 0;
+    }
 }

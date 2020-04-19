@@ -216,16 +216,6 @@ const finishGame = (str) => {
 
 const playResult = str => {
   const audio = new Audio(soundPath(`./${str}.mp3`));
-  /* switch (str) {
-    case 'failure':
-      audio = new Audio(soundPath(`./${str}.mp3`));
-      break;
-    case 'success':
-      audio = new Audio(soundPath(`./${str}.mp3`));
-      break;
-    default:
-      break;
-  } */
   audio.play();
   setTimeout(() => finishGame(str), 3000);
 }
