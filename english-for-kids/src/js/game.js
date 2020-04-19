@@ -14,6 +14,7 @@ export const LINKS = document.querySelectorAll('#menu li a');
 export const MAIN_PAGE = document.querySelector('.main-page');
 
 const soundPath = (name) => sounds(name, true);
+
 export const interruptGame = () => {
   RATING.innerHTML = "";
   RATING.style.justifyContent = '';
@@ -22,7 +23,7 @@ export const interruptGame = () => {
   words.splice(0);
 } 
 
-export const shuffle = arr => {
+const shuffle = arr => {
   const a = arr;
   let j; 
 	for(let i = a.length - 1; i > 0; i -= 1){
@@ -32,16 +33,16 @@ export const shuffle = arr => {
 	return a;
 }
 
-export const playAudio = (word) => {
+const playAudio = (word) => {
   const audio = new Audio(`https://wooordhunt.ru/data/sound/word/us/mp3/${word}.mp3`);
   audio.play();
 } 
 
-export const repeatWord = () => {
+const repeatWord = () => {
   playAudio(words[0]);
 }
 
-export const showStar = bool => {
+const showStar = bool => {
   const star = document.createElement('div');
   star.className = bool ? 'star-correct' : 'star-error';
   RATING.append(star);
@@ -52,7 +53,7 @@ export const togglePages = () => {
   SECTION_PAGE.classList.toggle('hidden');
 } 
 
-export const finishGame = (str) => {
+const finishGame = (str) => {
   RATING.innerHTML = "";
   RATING.style.justifyContent = '';
   document.body.classList.remove(`${str}`);
@@ -63,12 +64,12 @@ export const finishGame = (str) => {
   page.key = 0;
 }
 
-export const playResult = str => {
+const playResult = str => {
   const audio = new Audio(soundPath(`./${str}.mp3`));
   audio.play();
 }
 
-export const showResult = () => {
+const showResult = () => {
   RATING.style.justifyContent = 'center';
   SECTION_PAGE.innerHTML = '';
   BUTTON_REPEAT.classList.toggle('none');
@@ -86,7 +87,7 @@ export const showResult = () => {
   }
 }
 
-export const check = selectedCard => {
+const check = selectedCard => {
   if(selectedCard.querySelector('.word').innerHTML === words[0]) {
     words.shift();
 

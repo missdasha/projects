@@ -8,14 +8,6 @@ const images = require.context("../img", false, /\.(png|jpe?g|svg)$/);
 const SWITCH = document.querySelector('.toggle-button-cover');
 let isPlay = false;
 
-document.querySelector('.hamburger').addEventListener('click', () => {
-  toggleMenu();
-});
-
-document.querySelector('.overlay').addEventListener('click', () => {
-  toggleMenu();
-}); 
-
 const renderCategoryCards = ind => {
   cards[ind].forEach(el => {
     const newCard = document.createElement('div');
@@ -46,80 +38,90 @@ const renderCategoryCards = ind => {
   }
 }
 
-SWITCH.addEventListener('click', () => {
-  isPlay = !isPlay;
-  MENU.classList.toggle('violet');
-  document.querySelectorAll('.card').forEach((el) => {
-    el.classList.toggle('violet');
+window.onload = () => {
+  document.querySelector('.hamburger').addEventListener('click', () => {
+      toggleMenu();
   });
-  if(page.key) {
-    toggleModes();
-  }
-  if(words.length !== 0) {
-    interruptGame();
-    renderCategoryCards(page.key);
-  }
-})
-
-MENU.addEventListener('click', event => {
-  if(event.target.classList.contains('menu__link')) {
-    LINKS.forEach(elem => elem.classList.remove('active'));
-    event.target.classList.add('active');
-    toggleMenu();
     
-    const ind = Array.from(LINKS).indexOf(event.target);
-    page.key = ind;
-
-    if(!MAIN_PAGE.classList.contains('hidden')) {
-      if(ind !== 0) {
-        togglePages();
-        renderCategoryCards(ind);
-      }
+  document.querySelector('.overlay').addEventListener('click', () => {
+      toggleMenu();
+  }); 
+    
+  SWITCH.addEventListener('click', () => {
+    isPlay = !isPlay;
+    MENU.classList.toggle('violet');
+    document.querySelectorAll('.card').forEach((el) => {
+      el.classList.toggle('violet');
+    });
+    if(page.key) {
+      toggleModes();
     }
-    else {
-      SECTION_PAGE.innerHTML = '';
-      if(words.length !== 0) {
-        interruptGame(); 
-      }
-      if(ind !== 0) {
+    if(words.length !== 0) {
+      interruptGame();
+      renderCategoryCards(page.key);
+    }
+  }) 
+
+  MENU.addEventListener('click', event => {
+    if(event.target.classList.contains('menu__link')) {
+      LINKS.forEach(elem => elem.classList.remove('active'));
+      event.target.classList.add('active');
+      toggleMenu();
+      
+      const ind = Array.from(LINKS).indexOf(event.target);
+      page.key = ind;
+  
+      if(!MAIN_PAGE.classList.contains('hidden')) {
+        if(ind !== 0) {
+          togglePages();
           renderCategoryCards(ind);
-          if(isPlay) {
-            BUTTON_START.classList.remove('none');
-          }
+        }
       }
       else {
-        togglePages();
-        if(isPlay) {
-          BUTTON_START.classList.add('none');
+        SECTION_PAGE.innerHTML = '';
+        if(words.length !== 0) {
+          interruptGame(); 
+        }
+        if(ind !== 0) {
+            renderCategoryCards(ind);
+            if(isPlay) {
+              BUTTON_START.classList.remove('none');
+            }
+        }
+        else {
+          togglePages();
+          if(isPlay) {
+            BUTTON_START.classList.add('none');
+          }
         }
       }
     }
-  }
-})
-
-MAIN_PAGE.addEventListener('click', (event) => {
- if(event.target.classList.contains('card')) {
-  togglePages();
-
-  const ind = Array.from(document.querySelectorAll('.card')).indexOf(event.target) + 1;
-  renderCategoryCards(ind);
-  page.key = ind;
-
-  MENU.querySelectorAll('a').forEach(elem => elem.classList.remove('active'));
-  MENU.querySelector(`li:nth-child(${ind+1}) a`).classList.add('active');
- }
-})
-
-SECTION_PAGE.addEventListener('click', (event) => {
-  if(event.target.classList.contains('rotation')) {
-
-    const closest = event.target.closest('.section-card');
-    closest.classList.add('translate');
-
-    closest.addEventListener('mouseleave', () => {
-      closest.classList.remove('translate');
   })
-  }
-})
+  
+  MAIN_PAGE.addEventListener('click', (event) => {
+    if(event.target.classList.contains('card')) {
+      togglePages();
+  
+      const ind = Array.from(document.querySelectorAll('.card')).indexOf(event.target) + 1;
+      renderCategoryCards(ind);
+      page.key = ind;
+  
+      MENU.querySelectorAll('a').forEach(elem => elem.classList.remove('active'));
+      MENU.querySelector(`li:nth-child(${ind+1}) a`).classList.add('active');
+    }
+  })
+  
+  SECTION_PAGE.addEventListener('click', (event) => {
+      if(event.target.classList.contains('rotation')) {
+  
+        const closest = event.target.closest('.section-card');
+        closest.classList.add('translate');
+  
+        closest.addEventListener('mouseleave', () => {
+          closest.classList.remove('translate');
+      })
+      }
+  })
 
-BUTTON_START.addEventListener('click', startGame);
+  BUTTON_START.addEventListener('click', startGame);
+}
