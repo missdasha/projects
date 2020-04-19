@@ -19,6 +19,7 @@ module.exports = {
         'no-console': 'off',
         "no-use-before-define": ["error", { "functions": false, "classes": true }],
         "no-dynamic-require": 0,
-        "no-lonely-if": "off"
+        "no-lonely-if": "off",
+        "import/no-mutable-exports": "off"
     }
 };

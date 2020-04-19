@@ -35,7 +35,7 @@ header {
     height: 280px;
     border-radius: 5px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
-    background: linear-gradient(180deg,#e076c0,#f7dcf4 50%,#fff 0,#fff);
+    background: linear-gradient(180deg,#e460bc,#f7dcf4 50%,#fff 0,#fff);
     cursor: pointer; 
     flex-direction: column;
     font-family: Roboto;
