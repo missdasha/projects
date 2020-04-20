@@ -6,18 +6,39 @@ import { BUTTON_START, MENU, SECTION_PAGE, LINKS, words, startGame, interruptGam
 
 const images = require.context("../img", false, /\.(png|jpe?g|svg)$/);
 const SWITCH = document.querySelector('.toggle-button-cover');
+const STATISTICS_PAGE = document.querySelector('.statistics-page')
 let isPlay = false;
+
+const imagesPath = name => images(name, true);
+
+const renderTable = () => {
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  thead.innerHTML = `<th>Word</th><th>Translation</th><th>Section</th>`;
+  const tbody = document.createElement('tbody');
+  for(let i = 1; i <= 8; i += 1) {
+    cards[i].forEach((el) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${el.word}</td><td>${el.translation}</td><td>${cards[0][i-1]}</td>`;
+      tbody.append(tr);
+    })
+  }
+  table.append(thead);
+  table.append(tbody);
+  STATISTICS_PAGE.append(table);
+}
 
 const renderCategoryCards = ind => {
   cards[ind].forEach(el => {
     const newCard = document.createElement('div');
     newCard.className = 'card-container';
+    const url = imagesPath(el.image.replace('img', '.'));
     newCard.innerHTML = `<div class="section-card">
-                            <div class="front" style="background-image: url('${el.image}');">
+                            <div class="front" style="background-image: url('${url}');">
                                 <h2 class="word">${el.word}</h2>
                                 <div class="rotation" style="background-image: url('img/rotate.png');"></div>
                             </div>
-                            <div class="back" style="background-image: url('${el.image}');">
+                            <div class="back" style="background-image: url('${url}');">
                                 <h2 class="word">${el.translation}</h2>
                             </div>
                          </div>`; 
@@ -53,7 +74,7 @@ window.onload = () => {
     document.querySelectorAll('.card').forEach((el) => {
       el.classList.toggle('violet');
     });
-    if(page.key) {
+    if(page.key && page.key !== 9) {
       toggleModes();
     }
     if(words.length !== 0) {
@@ -61,6 +82,8 @@ window.onload = () => {
       renderCategoryCards(page.key);
     }
   }) 
+
+  renderTable();
 
   MENU.addEventListener('click', event => {
     if(event.target.classList.contains('menu__link')) {
@@ -70,23 +93,37 @@ window.onload = () => {
       
       const ind = Array.from(LINKS).indexOf(event.target);
       page.key = ind;
-  
-      if(!MAIN_PAGE.classList.contains('hidden')) {
+
+      if(!MAIN_PAGE.classList.contains('hidden')) { // if from main
         if(ind !== 0) {
-          togglePages();
-          renderCategoryCards(ind);
+          if(ind !== 9) {
+            togglePages();
+            renderCategoryCards(ind);
+          }
+          else {
+            MAIN_PAGE.classList.toggle('hidden');
+            STATISTICS_PAGE.classList.remove('hidden');
+            BUTTON_START.classList.add('none');
+          }
         }
       }
-      else {
+      else if(!SECTION_PAGE.classList.contains('hidden')) { // if from sections
         SECTION_PAGE.innerHTML = '';
         if(words.length !== 0) {
           interruptGame(); 
         }
         if(ind !== 0) {
+          if(ind !== 9) {
             renderCategoryCards(ind);
             if(isPlay) {
               BUTTON_START.classList.remove('none');
             }
+          }
+          else {
+            SECTION_PAGE.classList.toggle('hidden');
+            STATISTICS_PAGE.classList.remove('hidden');
+            BUTTON_START.classList.add('none');
+          }
         }
         else {
           togglePages();
@@ -95,9 +132,26 @@ window.onload = () => {
           }
         }
       }
+      else {
+        if(ind === 0) {
+          STATISTICS_PAGE.classList.add('hidden');
+          MAIN_PAGE.classList.toggle('hidden');
+          if(isPlay) {
+            BUTTON_START.classList.add('none');
+          }
+        }
+        else if(ind !== 9) {
+          STATISTICS_PAGE.classList.add('hidden');
+          SECTION_PAGE.classList.toggle('hidden');
+          renderCategoryCards(ind);
+          if(isPlay) {
+            BUTTON_START.classList.remove('none');
+          }
+        }
+      }
     }
   })
-  
+
   MAIN_PAGE.addEventListener('click', (event) => {
     if(event.target.classList.contains('card')) {
       togglePages();

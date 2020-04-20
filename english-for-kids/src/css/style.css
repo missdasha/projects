@@ -148,7 +148,7 @@ h2 {
     top: 50%;
     width: 94px;
     height: 40px;
-    margin: -20px auto 0 auto;
+    margin: -25px auto 0 auto;
     overflow: hidden;
 }
 
@@ -178,7 +178,7 @@ h2 {
     z-index: 1;
 }
 
-/* Button*/
+/*Button*/
 .button-switch .knobs:before {
     content: 'TRAIN';
     position: absolute;
@@ -444,6 +444,33 @@ main {
     overflow-x: hidden;
 }
  
+.statistics-page {
+    text-align: center;
+}
+
+table {
+    width: 70%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f38cda;
+}
+
+tbody {
+    background-color: #fbd9f3;
+}
+
+td, th {
+    padding: 5px 0;
+}
+
 @media (max-width: 1019px) {
     header {
         max-width: 677px;
@@ -458,6 +485,11 @@ main {
     .main-page, .section-page {
         flex-direction: column;
         align-items: center;
+    }
+
+    table {
+        width: 300px;
+        font-size: 14px;
     }
 }
 

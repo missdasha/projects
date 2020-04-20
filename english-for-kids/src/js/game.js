@@ -13,7 +13,7 @@ export const SECTION_PAGE = document.querySelector('.section-page');
 export const LINKS = document.querySelectorAll('#menu li a');
 export const MAIN_PAGE = document.querySelector('.main-page');
 
-const soundPath = (name) => sounds(name, true);
+const soundPath = name => sounds(name, true);
 
 export const interruptGame = () => {
   RATING.innerHTML = "";
@@ -33,7 +33,7 @@ const shuffle = arr => {
 	return a;
 }
 
-const playAudio = (word) => {
+const playAudio = word => {
   const audio = new Audio(`https://wooordhunt.ru/data/sound/word/us/mp3/${word}.mp3`);
   audio.play();
 } 
@@ -53,7 +53,7 @@ export const togglePages = () => {
   SECTION_PAGE.classList.toggle('hidden');
 } 
 
-const finishGame = (str) => {
+const finishGame = str => {
   RATING.innerHTML = "";
   RATING.style.justifyContent = '';
   document.body.classList.remove(`${str}`);
