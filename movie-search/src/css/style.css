@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+}
+
+header {
+    background-color: rgb(211, 33, 116);
+}
+
+h1 {
+    margin: 0;
+    padding: 19px 0;
+    text-align: center;
+    color: white;
+}
+
+main {
+    height: 450px;
+}
+
+.wrapper {
+    box-sizing: border-box;
+    max-width: 1020px;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+
+.search {
+    margin: 30px 0;
+    position: relative;
+    display: flex;
+}
+
+.search__input {
+    height: 31px;
+    width: 90%;
+    border-radius: 5px;
+    border: 1px solid grey;
+    outline: none;
+    background-image: url(../img/search.svg);
+    background-repeat: no-repeat;
+    background-size: 43px;
+    background-position: 5px 3px;
+    padding: 8px 55px;
+    font-size: 20px;
+    color: grey;
+}
+
+.button-delete {
+    background-image: url(../img/delete.png);
+    background-color:white;
+    height: 33px;
+    width: 33px;
+    background-repeat: no-repeat;
+    background-size: 33px;
+    border: none;
+    padding: 0;
+    position: absolute;
+    top: 8px;
+    right: 16%;
+    outline: none;
+    cursor: pointer;
+}
+
+.button-search {
+    background-color: rgb(211, 33, 116);
+    color: white;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    margin-left: 5px;
+    padding: 0px 20px;
+    outline: none;
+    cursor: pointer;
+}
+
+footer {
+    background-color: rgb(211, 33, 116);
+    color: white;
+}
+
+footer .wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.github {
+    position: relative;
+}
+
+.github::before {
+    content: "";
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    left: -40px;
+    top: -4px;
+    background-image: url(../img/github.svg);
+    background-size: 30px;
+}
