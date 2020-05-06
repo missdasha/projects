@@ -1,5 +1,12 @@
+html, body {
+    position: relative;
+    height: 100%;
+}
+
 body {
     margin: 0;
+    padding: 0;
+    background: #eee;
 }
 
 header {
@@ -14,7 +21,8 @@ h1 {
 }
 
 main {
-    height: 450px;
+    position: relative;
+    height: 620px;
 }
 
 .wrapper {
@@ -102,4 +110,70 @@ a {
     top: -4px;
     background-image: url(../img/github.svg);
     background-size: 30px;
+}
+
+/* slider */
+.swiper-container {
+    width: 80%;
+    height: 79%;
+    cursor: grab;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: rgb(211, 33, 116);
+    outline: none;
+}
+
+.swiper-button-next {
+    right: 50px;
+    left: auto
+}
+
+.swiper-button-prev {
+    left: 50px;
+    right: auto;
+}
+
+main>.swiper-pagination-bullets {
+    bottom: 16px;
+    left: 0;
+    width: 100%;
+}
+
+main>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 4px;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: rgb(211, 33, 116);
+    outline: none;
+}
+
+.poster {
+    padding-top: 0;
+    object-fit: cover;
+    height: 415px;
+    width: 100%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info a{
+    color: black;
+}
+
+.year {
+    padding-top: 10px;
 }
