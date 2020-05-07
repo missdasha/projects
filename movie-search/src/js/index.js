@@ -3,7 +3,7 @@ import '../css/style.css';
 import '../css/style.scss';
 import Swiper from '../../node_modules/swiper/js/swiper';
 
-const images = require.context("../img", false, /\.(png|jpe?g|svg)$/);
+require.context("../img", false, /\.(png|jpe?g|svg)$/);
 const SEARCH_INPUT = document.querySelector(".search__input");
 const BUTTON_DELETE = document.querySelector(".button-delete");
 const BUTTON_SEARCH = document.querySelector(".button-search");
@@ -16,9 +16,7 @@ const firstPage = 1;
 let filmName = 'dream';
 let currentPage = 1;
 let isChanged = false;
-
-const imagesPath = name => images(name, true);
-
+let isTranslated = false;
 const swiper = new Swiper('.swiper-container', {
   slidesPerView: 3,
   spaceBetween: 30,
@@ -52,7 +50,7 @@ const renderFilms = (filmsArray) => {
   const newSlides = [];
   filmsArray.forEach((film) => {
     newSlides.push(`<div class="swiper-slide">
-                  <img class="poster" src="${film.Poster !== 'N/A' ? film.Poster : DEFAULT_POSTER}">
+                  <img class="poster" onerror="this.onerror=null; this.src='${DEFAULT_POSTER}';" src="${film.Poster !== 'N/A' ? film.Poster : DEFAULT_POSTER}">
                   <div class="info">
                     <a href="https://www.imdb.com/title/${film.imdbID}/videogallery">
                       <span class="title">${film.Title}</span>
@@ -67,7 +65,7 @@ const renderFilms = (filmsArray) => {
   }
   currentPage += 1;
 }
-
+/*
 function getRaiting(id) {
   const url = `https://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`;
  
@@ -76,7 +74,7 @@ function getRaiting(id) {
     .then(data => {
       console.log(data.imdbRating)
     });
- }
+ } */
 
 function getMovies(name = filmName, page = firstPage) {
   toggleSpinner();
@@ -98,6 +96,9 @@ function getMovies(name = filmName, page = firstPage) {
           currentPage = 1;
           isChanged = false;
         }
+        if(isTranslated) {
+          MESSAGES.innerText = `Showing results for ${name}.`;
+        }
         renderFilms(filmsArray);
       }
       else {
@@ -118,6 +119,7 @@ function getMovies(name = filmName, page = firstPage) {
       /* let results = await Promise.all(raitings);
       console.log(results); */
       // getRaiting(data.Search[0].imdbID);
+      isTranslated = false;
       toggleSpinner();
     });
 }
@@ -128,20 +130,31 @@ BUTTON_DELETE.addEventListener('click', () =>{
   SEARCH_INPUT.value = '';
   SEARCH_INPUT.focus();
 });
-/*
-const translateQuery = query => {
-  
-} */
 
-const isRuLang = name => /(^[А-я0-9\s]+)(?!.*[A-z])$/.test(name);
+const translateQuery = query => {
+  const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20200322T155651Z.de98a60e6a99185e.089aea4237b51c6db082c966f27a7895cd1e8b44&text=${query}&lang=ru-en`;
+  return fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          if(data.code === 200) {
+            isTranslated = true;
+            const translation = data.text.join('');
+            getMovies(translation);
+          }
+        });
+} 
+
+const isRuLang = name => /(^[А-я\s]+)(?!.*[A-z])$/.test(name);
 
 const isEnLang = name => /(^[A-z0-9\s]+)(?!.*[А-я])$/.test(name);
 
 const handleInput = input =>  {
   if(input) {
+    isChanged = true;
     MESSAGES.innerText = '';
     if(isRuLang(input)) {
      console.log("ru");
+     translateQuery(input);
     }
     else if(isEnLang(input)) {
       console.log("en");
@@ -157,37 +170,13 @@ const handleInput = input =>  {
 }
 
 BUTTON_SEARCH.addEventListener('click', () => {
-  isChanged = true;
   const input = SEARCH_INPUT.value;
-  /* if(input) {
-    MESSAGES.innerText = '';
-    if(isRuLang) {
-     console.log("ru");
-    }
-    else if(isEnLang) {
-      getMovies(input, firstPage);
-    }
-    else {
-      MESSAGES.innerText = `No results for ${input}`;
-    }
-  } */
   handleInput(input);
 });
 
 document.addEventListener('keydown', event => {
-  isChanged = true;
-  const input = SEARCH_INPUT.value;
-  if(event.keyCode === 13/* && input */) {
-    /* MESSAGES.innerText = '';
-    if(isRuLang) { 
-      console.log("ru");
-    }
-    else if(isEnLang) {
-      getMovies(input, firstPage);
-    }
-    else {
-      MESSAGES.innerText = `No results for ${input}`;
-    } */
+  if(event.keyCode === 13) {
+    const input = SEARCH_INPUT.value;
     handleInput(input);
   }
 });
