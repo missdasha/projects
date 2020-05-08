@@ -1,19 +1,14 @@
+import {SEARCH_INPUT, BUTTON_DELETE, BUTTON_SEARCH, MESSAGES, SPINNER, CONTAINER, BUTTON_KEYBOARD,
+  DEFAULT_POSTER, OMDB_API_KEY, TRANSLATE_API_KEY, NO_POSTER, ENTER_KEYCODE, SUCCESS_CODE, FIRST_PAGE } from './constants';
+import {createMarkup, createButtons, handleVirtualKeyboard, ruButtons, enButtons} from './keyboard'
 import '../../node_modules/swiper/css/swiper.min.css';
 import '../css/style.css';
 import '../css/style.scss';
 import Swiper from '../../node_modules/swiper/js/swiper';
 
 require.context("../img", false, /\.(png|jpe?g|svg)$/);
-const SEARCH_INPUT = document.querySelector(".search__input");
-const BUTTON_DELETE = document.querySelector(".button-delete");
-const BUTTON_SEARCH = document.querySelector(".button-search");
-const MESSAGES = document.querySelector(".messages");
-const SPINNER = document.querySelector(".loader");
+
 const raitings = [];
-const DEFAULT_POSTER = '../img/default.png';
-const API_KEY = 'b848529c';
-const NO_POSTER = 'N/A';
-const firstPage = 1;
 let filmName = 'dream';
 let currentPage = 1;
 let isChanged = false;
@@ -33,12 +28,10 @@ const swiper = new Swiper('.swiper-container', {
       slidesPerView: 1,
       spaceBetween: 10
     },
-    // when window width is >= 768px
     640: {
       slidesPerView: 1,
       spaceBetween: 10
     },
-    // when window width is >= 640px
     768: {
       slidesPerView: 2,
       spaceBetween: 20
@@ -79,7 +72,7 @@ const renderFilms = (filmsArray) => {
                   </div>`)
   })
   swiper.appendSlide(newSlides);
-  if(currentPage === firstPage) {
+  if(currentPage === FIRST_PAGE) {
     swiper.slideTo(0);
   }
   currentPage += 1;
@@ -87,7 +80,7 @@ const renderFilms = (filmsArray) => {
 }
 
 function getRaiting(id) {
-  const url = `https://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`;
+  const url = `https://www.omdbapi.com/?i=${id}&apikey=${OMDB_API_KEY}`;
  
   return fetch(url)
     .then(res => res.json())
@@ -97,9 +90,9 @@ function getRaiting(id) {
     });
  } 
 
-function getMovies(name = filmName, page = firstPage) {
+function getMovies(name = filmName, page = FIRST_PAGE) {
   toggleSpinner();
-  const url = `https://www.omdbapi.com/?s=${name}&page=${page}&apikey=${API_KEY}`;
+  const url = `https://www.omdbapi.com/?s=${name}&page=${page}&apikey=${OMDB_API_KEY}`;
   const filmsArray = []; 
   console.log(name, page);
   return fetch(url)
@@ -108,7 +101,7 @@ function getMovies(name = filmName, page = firstPage) {
       if(data.Response === 'True') {
         data.Search.forEach(film => {
           filmsArray.push(film);
-          // const raiting = fetch(`https://www.omdbapi.com/?i=${film.imdbID}&apikey=${API_KEY}`).then(res => res.json());
+          // const raiting = fetch(`https://www.omdbapi.com/?i=${film.imdbID}&apikey=${OMDB_API_KEY}`).then(res => res.json());
           getRaiting(film.imdbID);
           /* raitings.push(raiting); */
         });
@@ -132,7 +125,7 @@ function getMovies(name = filmName, page = firstPage) {
             MESSAGES.innerText = data.Error;
           }
         }
-        else if(currentPage > firstPage) {
+        else if(currentPage > FIRST_PAGE) {
           MESSAGES.innerText = 'No more results.';
         }
         console.log(data.Error);
@@ -154,11 +147,11 @@ BUTTON_DELETE.addEventListener('click', () =>{
 });
 
 const translateQuery = query => {
-  const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20200322T155651Z.de98a60e6a99185e.089aea4237b51c6db082c966f27a7895cd1e8b44&text=${query}&lang=ru-en`;
+  const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${TRANSLATE_API_KEY}&text=${query}&lang=ru-en`;
   return fetch(url)
         .then(res => res.json())
         .then(data => {
-          if(data.code === 200) { // in constant
+          if(data.code === SUCCESS_CODE) {
             isTranslated = true;
             const translation = data.text.join('');
             getMovies(translation);
@@ -180,7 +173,7 @@ const handleInput = input =>  {
     }
     else if(isEnLang(input)) {
       console.log("en");
-      getMovies(input, firstPage);
+      getMovies(input, FIRST_PAGE);
     }
     else {
       MESSAGES.innerText = `No results for ${input}`;
@@ -196,9 +189,36 @@ BUTTON_SEARCH.addEventListener('click', () => {
   handleInput(input);
 });
 
+BUTTON_KEYBOARD.addEventListener('click', () => {
+  CONTAINER.classList.toggle('none');
+  SEARCH_INPUT.focus();
+})
+
 document.addEventListener('keydown', event => {
-  if(event.keyCode === 13) { // in constant
+  if(event.keyCode === ENTER_KEYCODE) { 
     const input = SEARCH_INPUT.value;
     handleInput(input);
   }
+});
+
+window.addEventListener('load', () => {
+  createMarkup();
+  if(localStorage.getItem('lang') !== null) {
+      if (localStorage.getItem('lang') === 'ru') {
+          createButtons(ruButtons);
+      }
+      else {
+          createButtons(enButtons);
+      }
+  }
+  else {
+      localStorage.setItem('lang', 'en');
+      createButtons(enButtons);
+  }
+  handleVirtualKeyboard();
+  
+  document.getElementById('Enter').addEventListener('click', () => {
+    const input = SEARCH_INPUT.value;
+    handleInput(input);
+  })
 });

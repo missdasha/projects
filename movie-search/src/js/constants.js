@@ -1,0 +1,14 @@
+export const SEARCH_INPUT = document.querySelector(".search__input");
+export const BUTTON_DELETE = document.querySelector(".button-delete");
+export const BUTTON_SEARCH = document.querySelector(".button-search");
+export const MESSAGES = document.querySelector(".messages");
+export const SPINNER = document.querySelector(".loader");
+export const CONTAINER = document.querySelector('.container');
+export const BUTTON_KEYBOARD =  document.querySelector(".button-keyboard");
+export const DEFAULT_POSTER = '../img/default.png';
+export const OMDB_API_KEY = 'b848529c';
+export const TRANSLATE_API_KEY = 'trnsl.1.1.20200322T155651Z.de98a60e6a99185e.089aea4237b51c6db082c966f27a7895cd1e8b44';
+export const NO_POSTER = 'N/A';
+export const ENTER_KEYCODE = 13;
+export const SUCCESS_CODE = 200;
+export const FIRST_PAGE = 1;
