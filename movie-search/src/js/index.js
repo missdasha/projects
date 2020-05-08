@@ -9,26 +9,44 @@ const BUTTON_DELETE = document.querySelector(".button-delete");
 const BUTTON_SEARCH = document.querySelector(".button-search");
 const MESSAGES = document.querySelector(".messages");
 const SPINNER = document.querySelector(".loader");
-// const raitings = [];
+const raitings = [];
 const DEFAULT_POSTER = '../img/default.png';
 const API_KEY = 'b848529c';
+const NO_POSTER = 'N/A';
 const firstPage = 1;
 let filmName = 'dream';
 let currentPage = 1;
 let isChanged = false;
 let isTranslated = false;
+
 const swiper = new Swiper('.swiper-container', {
   slidesPerView: 3,
   spaceBetween: 30,
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-    /* dynamicBullets: true,
-    dynamicMainBullets: 10 */
-  },
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
+  },
+  centerInsufficientSlides: true,
+  breakpoints: {
+    // when window width is >= 320px
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 10
+    },
+    // when window width is >= 768px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 10
+    },
+    // when window width is >= 640px
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 20
+    },
+    1100: {
+      slidesPerView: 3,
+      spaceBetween: 30
+    }
   }
 });
 
@@ -46,35 +64,38 @@ const toggleSpinner = () => {
 }
 
 const renderFilms = (filmsArray) => {
+  console.log(raitings);
   console.log(filmsArray);
   const newSlides = [];
-  filmsArray.forEach((film) => {
+  filmsArray.forEach((film, ind) => {
     newSlides.push(`<div class="swiper-slide">
-                  <img class="poster" onerror="this.onerror=null; this.src='${DEFAULT_POSTER}';" src="${film.Poster !== 'N/A' ? film.Poster : DEFAULT_POSTER}">
+                  <img class="poster" onerror="this.onerror=null; this.src='${DEFAULT_POSTER}';" src="${film.Poster !== NO_POSTER ? film.Poster : DEFAULT_POSTER}">
                   <div class="info">
                     <a href="https://www.imdb.com/title/${film.imdbID}/videogallery">
                       <span class="title">${film.Title}</span>
                     </a>
-                    <span class="year">${film.Year}</span>
+                    <span class="year">${film.Year}</span><span>${raitings[ind]}</span>
                   </div>
                   </div>`)
   })
   swiper.appendSlide(newSlides);
-  if(currentPage === 1) {
+  if(currentPage === firstPage) {
     swiper.slideTo(0);
   }
   currentPage += 1;
+  raitings.splice(0);
 }
-/*
+
 function getRaiting(id) {
   const url = `https://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`;
  
   return fetch(url)
     .then(res => res.json())
     .then(data => {
-      console.log(data.imdbRating)
+      console.log(data.imdbRating);
+      raitings.push(data.imdbRating);
     });
- } */
+ } 
 
 function getMovies(name = filmName, page = firstPage) {
   toggleSpinner();
@@ -87,8 +108,9 @@ function getMovies(name = filmName, page = firstPage) {
       if(data.Response === 'True') {
         data.Search.forEach(film => {
           filmsArray.push(film);
-          /* const raiting = fetch(`https://www.omdbapi.com/?i=${film.imdbID}&apikey=${API_KEY}`).then(res => res.json());
-          raitings.push(raiting); */
+          // const raiting = fetch(`https://www.omdbapi.com/?i=${film.imdbID}&apikey=${API_KEY}`).then(res => res.json());
+          getRaiting(film.imdbID);
+          /* raitings.push(raiting); */
         });
         if(isChanged) {
           swiper.removeAllSlides();
@@ -110,7 +132,7 @@ function getMovies(name = filmName, page = firstPage) {
             MESSAGES.innerText = data.Error;
           }
         }
-        else if(currentPage > 1) {
+        else if(currentPage > firstPage) {
           MESSAGES.innerText = 'No more results.';
         }
         console.log(data.Error);
@@ -136,7 +158,7 @@ const translateQuery = query => {
   return fetch(url)
         .then(res => res.json())
         .then(data => {
-          if(data.code === 200) {
+          if(data.code === 200) { // in constant
             isTranslated = true;
             const translation = data.text.join('');
             getMovies(translation);
@@ -175,7 +197,7 @@ BUTTON_SEARCH.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', event => {
-  if(event.keyCode === 13) {
+  if(event.keyCode === 13) { // in constant
     const input = SEARCH_INPUT.value;
     handleInput(input);
   }

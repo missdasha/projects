@@ -64,7 +64,22 @@ main {
     padding: 0;
     position: absolute;
     top: 8px;
-    right: 16%;
+    right: 150px;
+    outline: none;
+    cursor: pointer;
+}
+
+.button-keyboard {
+    background-image: url(../img/keyboard.png);
+    background-repeat: no-repeat;
+    background-size: 54px;
+    position: absolute;
+    right: 94px;
+    top: 9px;
+    height: 30px;
+    width: 53px;
+    border: none;
+    padding: 0;
     outline: none;
     cursor: pointer;
 }
@@ -114,7 +129,7 @@ a {
 
 /* slider */
 .swiper-container {
-    width: 80%;
+    max-width: 984px; /* 80%*/
     height: 79%;
     cursor: grab;
 }
@@ -133,12 +148,12 @@ a {
 }
 
 .swiper-button-next {
-    right: 50px;
+    right: 40px;
     left: auto
 }
 
 .swiper-button-prev {
-    left: 50px;
+    left: 40px;
     right: auto;
 }
 /*
@@ -180,7 +195,8 @@ main>.swiper-pagination-bullets .swiper-pagination-bullet {
 
 .messages {
     text-align: center;
-    margin: 15px 0;
+    margin: 13px 0;
+    height: 15px;
 }
 
 .loader,
@@ -229,4 +245,61 @@ main>.swiper-pagination-bullets .swiper-pagination-bullet {
 
 .none {
     display: none;
+}
+
+@media (max-width: 1119px) {
+    .swiper-container {
+        max-width: 784px; 
+    }
+}
+
+@media (max-width: 940px) {
+    .swiper-container {
+        max-width: 684px; 
+    }
+    .swiper-button-next, .swiper-button-prev {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .search__input {
+        padding-right: 8px;
+    }
+    .swiper-container {
+        max-width: 300px; 
+    }
+    .button-keyboard, .button-delete {
+        display: none;
+    }
+    .loader {
+        right: 100px;
+    }
+}
+
+@media (max-width: 374px) {
+    .messages {
+        height: auto;
+    }
+    .button-search {
+        margin-top: 10px;
+        padding: 10px 20px;
+        height: 49px;
+    }
+    main {
+        height: 700px;
+    }
+    .swiper-container {
+        height: 500px;
+    }
+    .loader {
+        right: 5px;
+    }
+    footer .wrapper, .search {
+        flex-direction: column;
+        align-items: center;
+    }
+    h3 {
+        margin: 8px 0;
+    }
 }
