@@ -1,6 +1,7 @@
 import {SEARCH_INPUT, BUTTON_DELETE, BUTTON_SEARCH, MESSAGES, SPINNER, CONTAINER, BUTTON_KEYBOARD,
   DEFAULT_POSTER, OMDB_API_KEY, TRANSLATE_API_KEY, NO_POSTER, ENTER_KEYCODE, SUCCESS_CODE, FIRST_PAGE } from './constants';
 import {createMarkup, createButtons, handleVirtualKeyboard, ruButtons, enButtons} from './keyboard'
+import {isRuLang, isEnLang} from './defineLanguage'
 import '../../node_modules/swiper/css/swiper.min.css';
 import '../css/style.css';
 import '../css/style.scss';
@@ -158,10 +159,6 @@ const translateQuery = query => {
           }
         });
 } 
-
-const isRuLang = name => /(^[А-я\s]+)(?!.*[A-z])$/.test(name);
-
-const isEnLang = name => /(^[A-z0-9\s]+)(?!.*[А-я])$/.test(name);
 
 const handleInput = input =>  {
   if(input) {

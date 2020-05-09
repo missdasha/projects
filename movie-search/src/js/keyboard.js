@@ -67,9 +67,7 @@ const printSymbols = id => {
     })
 }
 
-const isSpecial = (code) => {
-    return special.includes(code);
-}
+export const isSpecial = code => special.includes(code);
 
 const handleTab = () => {
     textArea.setRangeText('    ', textArea.selectionStart, textArea.selectionEnd, "end");

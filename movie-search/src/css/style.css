@@ -148,7 +148,7 @@ a:hover, .info a:hover {
 
 /* slider */
 .swiper-container {
-    max-width: 984px; /* 80%*/
+    max-width: 984px; 
     height: 79%;
     cursor: grab;
 }
@@ -175,21 +175,6 @@ a:hover, .info a:hover {
     left: 40px;
     right: auto;
 }
-/*
-main>.swiper-pagination-bullets {
-    bottom: 16px;
-    left: 0;
-    width: 100%;
-}
-
-main>.swiper-pagination-bullets .swiper-pagination-bullet {
-    margin: 0 4px;
-}
-
-.swiper-pagination-bullet-active {
-    background-color: rgb(211, 33, 116);
-    outline: none;
-}*/
 
 .poster {
     padding-top: 0;
