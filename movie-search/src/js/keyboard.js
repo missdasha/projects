@@ -57,13 +57,12 @@ export const createButtons = (arr) => {
     }
 }
 
-
 const printSymbols = id => {
     const buttons = document.querySelectorAll('.keyboard__button');
     buttons.forEach((btn) => {
-        if(btn.id === id) { 
-            textArea.focus();   
+        if(btn.id === id) {  
             textArea.setRangeText(btn.innerHTML, textArea.selectionStart, textArea.selectionEnd, "end");
+            textArea.focus(); 
         }
     })
 }
@@ -80,10 +79,6 @@ const handleSpace = () => {
     textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, "end");
 }
 
-/* const handleEnter = () => {
-    const input = textArea.value;
-} */
-
 const handleBackspace = () => {
     if(textArea.selectionStart && textArea.selectionStart===textArea.selectionEnd) {
         textArea.setRangeText('', textArea.selectionStart-1, textArea.selectionEnd);
@@ -94,7 +89,8 @@ const handleBackspace = () => {
 }
 
 const handleDelete = () => {
-    textArea.setRangeText('', textArea.selectionStart, textArea.selectionEnd+1);
+    textArea.setRangeText('', textArea.selectionStart, textArea.selectionEnd+1, 'end');
+    textArea.focus();
 }
 
 const handleCapsLock = () => {
@@ -119,6 +115,18 @@ const handleCapsLock = () => {
         }
     });
     capsLock = !capsLock;
+}
+
+const handleArrowLeft = () => {
+    if(textArea.selectionStart) {
+        textArea.selectionStart -= 1;
+        textArea.selectionEnd = textArea.selectionStart;
+    }
+}
+
+const handleArrowRight = () => {
+    textArea.selectionStart += 1;
+    textArea.selectionEnd += 1;
 }
 
 const showAnimation = code => {
@@ -189,6 +197,7 @@ const changeLanguage = () => {
 export const handleVirtualKeyboard = () => {
     const keyboard = document.querySelector('.keyboard');
     keyboard.addEventListener("mousedown", (event) => {
+        textArea.focus();
         const {id} = event.target;
         if(id === "Tab") {
             handleTab();
@@ -202,9 +211,6 @@ export const handleVirtualKeyboard = () => {
         else if(id === "Space") {
             handleSpace();
         }
-        /* else if(id === "Enter") {
-            handleEnter();
-        } */
         else if(id === "Backspace") {
             handleBackspace();
         }
@@ -214,16 +220,24 @@ export const handleVirtualKeyboard = () => {
         else if(id === "CapsLock") {
             handleCapsLock();
         }
-        else if(id === 'ArrowLeft' || id === 'ArrowUp' || id === 'ArrowRight' || id === 'ArrowDown') {
+        else if(id === 'ArrowUp' || id === 'ArrowDown') {
             printSymbols(id);
+        }
+        else if(id === 'ArrowLeft') {
+            handleArrowLeft();
+        }
+        else if(id === 'ArrowRight') {
+            handleArrowRight();
         }
         if(isSpecial(id)) {
             textArea.focus();
+            console.log(textArea.selectionStart, textArea.selectionEnd);
         }
         else {
             printSymbols(id);
         }
         showAnimation(id);
+        textArea.focus();
     })
 
     keyboard.addEventListener("mouseup", (event) => {
