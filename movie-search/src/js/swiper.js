@@ -9,6 +9,7 @@ const swiper = new Swiper('.swiper-container', {
     prevEl: '.swiper-button-prev',
   },
   centerInsufficientSlides: true,
+  preloadImages: true,
   breakpoints: {
     320: {
       slidesPerView: 1,
@@ -28,5 +29,12 @@ const swiper = new Swiper('.swiper-container', {
     }
   }
 });
+
+swiper.on('click', (event) => {
+  const {target} = event;
+  if(target.classList.contains('details')) {
+    target.closest('.swiper-slide').querySelector('.addition').classList.toggle('block');
+  }
+})
 
 export default swiper;

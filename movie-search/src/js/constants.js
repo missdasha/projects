@@ -6,13 +6,15 @@ export const SPINNER = document.querySelector(".loader");
 export const CONTAINER = document.querySelector('.container');
 export const BUTTON_KEYBOARD =  document.querySelector(".button-keyboard");
 export const DEFAULT_POSTER = '../img/default.png';
-export const OMDB_API_KEY = 'b848529c';
+export const OMDB_API_KEY = '27daf79b';
 export const TRANSLATE_API_KEY = 'trnsl.1.1.20200322T155651Z.de98a60e6a99185e.089aea4237b51c6db082c966f27a7895cd1e8b44';
 export const NO_POSTER = 'N/A';
 export const NOT_FOUND = 'Movie not found!';
 export const ENTER_KEYCODE = 13;
 export const SUCCESS_CODE = 200;
 export const FIRST_PAGE = 1;
+export const REGEX_EN = /(^[A-z0-9\s]+)(?!.*[А-я])$/;
+export const REGEX_RU = /(^[А-я\s]+)(?!.*[A-z])$/;
 
 export const enButtons = [['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '&#8592'],
                     ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],

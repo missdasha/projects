@@ -1,2 +1,4 @@
-export const isRuLang = name => /(^[А-я\s]+)(?!.*[A-z])$/.test(name);
-export const isEnLang = name => /(^[A-z0-9\s]+)(?!.*[А-я])$/.test(name);
+import {REGEX_EN, REGEX_RU} from './constants';
+
+export const isRuLang = name => REGEX_RU.test(name);
+export const isEnLang = name => REGEX_EN.test(name);

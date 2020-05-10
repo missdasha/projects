@@ -159,6 +159,28 @@ a:hover, .info a:hover {
     background: #fff;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.addition {
+    padding: 40px 15px;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 74px;
+    right: 0;
+    top: 0;
+    background: hsla(0, 1%, 4%, 0.81);
+    display: none;
+    text-align: left;
+}
+
+.block {
+    display: block;
+}
+
+.details {
+    cursor: pointer;
 }
 
 .swiper-button-next, .swiper-button-prev {
@@ -197,7 +219,26 @@ a:hover, .info a:hover {
 
 .info a {
     color: black;
+    padding-top: 5px;
+}
+
+.title {
     height: 45px;
+}
+
+.raiting {
+    position: relative;
+}
+
+.raiting::before {
+    content: "";
+    background-image: url(../img/star.png);
+    height: 21px;
+    width: 21px;
+    background-size: 21px;
+    position: absolute;
+    left: -24px;
+    top: 0px;
 }
 
 .messages {
@@ -375,6 +416,10 @@ a:hover, .info a:hover {
     }
     .swiper-container {
         height: 500px;
+    }
+    .addition {
+        bottom: 85px;
+        font-size: 16px;
     }
     .loader {
         right: 5px;

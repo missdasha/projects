@@ -8,64 +8,72 @@ import '../css/style.css';
 
 require.context("../img", false, /\.(png|jpe?g|svg)$/);
 
-let raitings = [];
 let filmName = 'dream';
 let currentPage = 1;
 let isChanged = false;
 let isTranslated = false;
+let filmsDetails = [];
 
 const toggleSpinner = () => {
   SPINNER.classList.toggle('none');
 }
 
+const renderFilm = (film, ind) => {
+  return `<div class="swiper-slide">
+            <img class="poster" onerror="this.onerror=null; this.src='${DEFAULT_POSTER}';" src="${film.Poster !== NO_POSTER ? film.Poster : DEFAULT_POSTER}">
+            <div class="info">
+              <div class="title">
+                <a href="https://www.imdb.com/title/${film.imdbID}/videogallery">${film.Title}</a>
+              </div>
+              <div class="info__footer">
+                <span>${film.Year}</span>
+                <img class="details" src="../img/details.png">
+                <span class="raiting">${filmsDetails[ind].imdbRating}</span>
+              </div>
+            </div>
+            <div class="addition">
+              <p>Actors: ${filmsDetails[ind].Actors}</p>
+              <p>Country: ${filmsDetails[ind].Country}</p>
+              <p>Genre: ${filmsDetails[ind].Genre}</p>
+              <p>Plot: ${filmsDetails[ind].Plot}</p>
+              <p>Runtime: ${filmsDetails[ind].Runtime}</p>
+            </div>
+          </div>`
+}
+
 const renderFilms = (filmsArray) => {
-  console.log(raitings);
-  console.log(filmsArray);
   const newSlides = [];
   filmsArray.forEach((film, ind) => {
-    newSlides.push(`<div class="swiper-slide">
-                  <img class="poster" onerror="this.onerror=null; this.src='${DEFAULT_POSTER}';" src="${film.Poster !== NO_POSTER ? film.Poster : DEFAULT_POSTER}">
-                  <div class="info">
-                    <a href="https://www.imdb.com/title/${film.imdbID}/videogallery">
-                      <span class="title">${film.Title}</span>
-                    </a>
-                    <div class="info__footer">
-                      <span class="year">${film.Year}</span>
-                      <span>${raitings[ind]}</span>
-                    </div>
-                  </div>
-                  </div>`)
+    newSlides.push(renderFilm(film, ind));
   })
   swiper.appendSlide(newSlides);
   if(currentPage === FIRST_PAGE) {
     swiper.slideTo(0);
   }
   currentPage += 1;
-  raitings.splice(0);
+  filmsDetails.splice(0);
 }
 
-const getRaiting = async (film) => {
+const getInfo = async (film) => {
   const id = film.imdbID;
   const url = `https://www.omdbapi.com/?i=${id}&apikey=${OMDB_API_KEY}`;
   return fetch(url)
     .then(res => res.json())
     .then(data => {
-      return data.imdbRating;
+      return data;
     });
- }
+}
 
-const getMovies = async (name, page) => {
+const getFilms = async (name, page) => {
   toggleSpinner();
   const url = `https://www.omdbapi.com/?s=${name}&page=${page}&apikey=${OMDB_API_KEY}`;
   let filmsArray = []; 
-  console.log(name, page);
   const res = await fetch(url);
-  console.log(res);
   const data = await res.json();
   if(data.Response === 'True') {
     filmsArray = [].concat(data.Search);
-    const promises = filmsArray.map(getRaiting);
-    raitings = await Promise.all(promises);
+    const promises = filmsArray.map(getInfo);
+    filmsDetails = await Promise.all(promises);
     if(isChanged) {
       swiper.removeAllSlides();
       filmName = name;
@@ -101,10 +109,11 @@ const getMovies = async (name, page) => {
   }
   isTranslated = false;
   toggleSpinner();
+  CONTAINER.classList.add('none');
 }
 
 const makeQuery = async (name = filmName, page = FIRST_PAGE) => {
-  await getMovies(name, page);
+  await getFilms(name, page);
 }
 
 const translateQuery = query => {
@@ -125,12 +134,9 @@ const handleInput = input =>  {
     isChanged = true;
     MESSAGES.innerText = '';
     if(isRuLang(input)) {
-     console.log("ru");
      translateQuery(input);
     }
     else if(isEnLang(input)) {
-      console.log("en");
-
       makeQuery(input, FIRST_PAGE);
     }
     else {
@@ -144,9 +150,7 @@ const handleInput = input =>  {
 
 swiper.on('slideNextTransitionStart', () => {
   if(swiper.activeIndex === Math.round(swiper.slides.length/2)) {
-    console.log(swiper.activeIndex);
     makeQuery(filmName, currentPage);
-    console.log('slideChange');
   }
 })
 
