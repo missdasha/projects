@@ -1,59 +1,20 @@
 import {SEARCH_INPUT, BUTTON_DELETE, BUTTON_SEARCH, MESSAGES, SPINNER, CONTAINER, BUTTON_KEYBOARD,
-  DEFAULT_POSTER, OMDB_API_KEY, TRANSLATE_API_KEY, NO_POSTER, ENTER_KEYCODE, SUCCESS_CODE, FIRST_PAGE } from './constants';
-import {createMarkup, createButtons, handleVirtualKeyboard, ruButtons, enButtons} from './keyboard'
+  DEFAULT_POSTER, OMDB_API_KEY, TRANSLATE_API_KEY, NO_POSTER, NOT_FOUND, ENTER_KEYCODE, SUCCESS_CODE, FIRST_PAGE, 
+  ruButtons, enButtons} from './constants';
+import {createMarkup, createButtons, handleVirtualKeyboard} from './keyboard'
 import {isRuLang, isEnLang} from './defineLanguage'
-import '../../node_modules/swiper/css/swiper.min.css';
+import swiper from './swiper'
 import '../css/style.css';
-import '../css/style.scss';
-import Swiper from '../../node_modules/swiper/js/swiper';
 
 require.context("../img", false, /\.(png|jpe?g|svg)$/);
 
-const raitings = [];
+let raitings = [];
 let filmName = 'dream';
 let currentPage = 1;
 let isChanged = false;
 let isTranslated = false;
 
-const swiper = new Swiper('.swiper-container', {
-  slidesPerView: 3,
-  spaceBetween: 30,
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  centerInsufficientSlides: true,
-  breakpoints: {
-    // when window width is >= 320px
-    320: {
-      slidesPerView: 1,
-      spaceBetween: 10
-    },
-    640: {
-      slidesPerView: 1,
-      spaceBetween: 10
-    },
-    768: {
-      slidesPerView: 2,
-      spaceBetween: 20
-    },
-    1100: {
-      slidesPerView: 3,
-      spaceBetween: 30
-    }
-  }
-});
-
-swiper.on('slideNextTransitionStart', () => {
-  if(swiper.activeIndex === Math.round(swiper.slides.length/2)) {
-    console.log(swiper.activeIndex);
-    getMovies(filmName, currentPage);
-    console.log('slideChange');
-  }
-})
-
 const toggleSpinner = () => {
-  console.log("toggle");
   SPINNER.classList.toggle('none');
 }
 
@@ -68,7 +29,10 @@ const renderFilms = (filmsArray) => {
                     <a href="https://www.imdb.com/title/${film.imdbID}/videogallery">
                       <span class="title">${film.Title}</span>
                     </a>
-                    <span class="year">${film.Year}</span><span>${raitings[ind]}</span>
+                    <div class="info__footer">
+                      <span class="year">${film.Year}</span>
+                      <span>${raitings[ind]}</span>
+                    </div>
                   </div>
                   </div>`)
   })
@@ -80,72 +44,68 @@ const renderFilms = (filmsArray) => {
   raitings.splice(0);
 }
 
-function getRaiting(id) {
+const getRaiting = async (film) => {
+  const id = film.imdbID;
   const url = `https://www.omdbapi.com/?i=${id}&apikey=${OMDB_API_KEY}`;
- 
   return fetch(url)
     .then(res => res.json())
     .then(data => {
-      console.log(data.imdbRating);
-      raitings.push(data.imdbRating);
+      return data.imdbRating;
     });
- } 
+ }
 
-function getMovies(name = filmName, page = FIRST_PAGE) {
+const getMovies = async (name, page) => {
   toggleSpinner();
   const url = `https://www.omdbapi.com/?s=${name}&page=${page}&apikey=${OMDB_API_KEY}`;
-  const filmsArray = []; 
+  let filmsArray = []; 
   console.log(name, page);
-  return fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      if(data.Response === 'True') {
-        data.Search.forEach(film => {
-          filmsArray.push(film);
-          // const raiting = fetch(`https://www.omdbapi.com/?i=${film.imdbID}&apikey=${OMDB_API_KEY}`).then(res => res.json());
-          getRaiting(film.imdbID);
-          /* raitings.push(raiting); */
-        });
-        if(isChanged) {
-          swiper.removeAllSlides();
-          filmName = name;
-          currentPage = 1;
-          isChanged = false;
-        }
-        if(isTranslated) {
-          MESSAGES.innerText = `Showing results for ${name}.`;
-        }
-        renderFilms(filmsArray);
+  const res = await fetch(url);
+  console.log(res);
+  const data = await res.json();
+  if(data.Response === 'True') {
+    filmsArray = [].concat(data.Search);
+    const promises = filmsArray.map(getRaiting);
+    raitings = await Promise.all(promises);
+    if(isChanged) {
+      swiper.removeAllSlides();
+      filmName = name;
+      currentPage = 1;
+      isChanged = false;
+    }
+    if(isTranslated) {
+      MESSAGES.innerText = `Showing results for ${name}.`;
+    }
+    renderFilms(filmsArray);
+  }
+  else {
+    if(isChanged) {
+      if(data.Error === NOT_FOUND) {
+        MESSAGES.innerText = `No results for ${name}`;
       }
       else {
-        if(isChanged) {
-          if(data.Error === 'Movie not found!') {
-            MESSAGES.innerText = `No results for ${name}`;
-          }
-          else {
-            MESSAGES.innerText = data.Error;
-          }
-        }
-        else if(currentPage > FIRST_PAGE) {
-          MESSAGES.innerText = 'No more results.';
-        }
-        console.log(data.Error);
-        isChanged = false;
+          MESSAGES.innerText = data.Error;
       }
-      /* let results = await Promise.all(raitings);
-      console.log(results); */
-      // getRaiting(data.Search[0].imdbID);
-      isTranslated = false;
-      toggleSpinner();
-    });
+    }
+    else if(currentPage > FIRST_PAGE) {
+      if(data.Error === NOT_FOUND) {
+        MESSAGES.innerText = `No more results.`;
+      }
+      else {
+        MESSAGES.innerText = data.Error;
+      }
+    }
+    else {
+      MESSAGES.innerText = data.Error;
+    }
+    isChanged = false;
+  }
+  isTranslated = false;
+  toggleSpinner();
 }
 
-getMovies();
-
-BUTTON_DELETE.addEventListener('click', () =>{
-  SEARCH_INPUT.value = '';
-  SEARCH_INPUT.focus();
-});
+const makeQuery = async (name = filmName, page = FIRST_PAGE) => {
+  await getMovies(name, page);
+}
 
 const translateQuery = query => {
   const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${TRANSLATE_API_KEY}&text=${query}&lang=ru-en`;
@@ -155,7 +115,7 @@ const translateQuery = query => {
           if(data.code === SUCCESS_CODE) {
             isTranslated = true;
             const translation = data.text.join('');
-            getMovies(translation);
+            makeQuery(translation);
           }
         });
 } 
@@ -170,7 +130,8 @@ const handleInput = input =>  {
     }
     else if(isEnLang(input)) {
       console.log("en");
-      getMovies(input, FIRST_PAGE);
+
+      makeQuery(input, FIRST_PAGE);
     }
     else {
       MESSAGES.innerText = `No results for ${input}`;
@@ -181,8 +142,21 @@ const handleInput = input =>  {
   }
 }
 
+swiper.on('slideNextTransitionStart', () => {
+  if(swiper.activeIndex === Math.round(swiper.slides.length/2)) {
+    console.log(swiper.activeIndex);
+    makeQuery(filmName, currentPage);
+    console.log('slideChange');
+  }
+})
+
+BUTTON_DELETE.addEventListener('click', () =>{
+  SEARCH_INPUT.value = '';
+  SEARCH_INPUT.focus();
+});
+
 BUTTON_SEARCH.addEventListener('click', () => {
-  const input = SEARCH_INPUT.value;
+  const input = SEARCH_INPUT.value.trim();
   handleInput(input);
 });
 
@@ -193,7 +167,7 @@ BUTTON_KEYBOARD.addEventListener('click', () => {
 
 document.addEventListener('keydown', event => {
   if(event.keyCode === ENTER_KEYCODE) { 
-    const input = SEARCH_INPUT.value;
+    const input = SEARCH_INPUT.value.trim();
     handleInput(input);
   }
 });
@@ -215,7 +189,9 @@ window.addEventListener('load', () => {
   handleVirtualKeyboard();
   
   document.getElementById('Enter').addEventListener('click', () => {
-    const input = SEARCH_INPUT.value;
+    const input = SEARCH_INPUT.value.trim();
     handleInput(input);
-  })
+  });
+
+  makeQuery();
 });

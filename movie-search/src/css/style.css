@@ -189,12 +189,15 @@ a:hover, .info a:hover {
     justify-content: space-between;
 }
 
-.info a{
-    color: black;
+.info__footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
 }
 
-.year {
-    padding-top: 10px;
+.info a {
+    color: black;
+    height: 45px;
 }
 
 .messages {
