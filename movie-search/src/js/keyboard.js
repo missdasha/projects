@@ -162,6 +162,7 @@ const changeLanguage = () => {
 export const handleVirtualKeyboard = () => {
     const keyboard = document.querySelector('.keyboard');
     keyboard.addEventListener("mousedown", (event) => {
+        event.preventDefault();
         textArea.focus();
         const {id} = event.target;
         if(id === "Tab") {
