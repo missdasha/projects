@@ -1,6 +1,6 @@
 import {SEARCH_INPUT, BUTTON_DELETE, BUTTON_SEARCH, MESSAGES, SPINNER, CONTAINER, BUTTON_KEYBOARD,
   DEFAULT_POSTER, OMDB_API_KEY, TRANSLATE_API_KEY, NO_POSTER, NOT_FOUND, ENTER_KEYCODE, SUCCESS_CODE, FIRST_PAGE, 
-  ruButtons, enButtons} from './constants';
+  ruButtons, enButtons, ENTER} from './constants';
 import {createMarkup, createButtons, handleVirtualKeyboard} from './keyboard'
 import {isRuLang, isEnLang} from './defineLanguage'
 import swiper from './swiper'
@@ -84,6 +84,7 @@ const getFilms = async (name, page) => {
       MESSAGES.innerText = `Showing results for ${name}.`;
     }
     renderFilms(filmsArray);
+    CONTAINER.classList.add('none');
   }
   else {
     if(isChanged) {
@@ -109,7 +110,6 @@ const getFilms = async (name, page) => {
   }
   isTranslated = false;
   toggleSpinner();
-  CONTAINER.classList.add('none');
 }
 
 const makeQuery = async (name = filmName, page = FIRST_PAGE) => {
@@ -191,10 +191,13 @@ window.addEventListener('load', () => {
       createButtons(enButtons);
   }
   handleVirtualKeyboard();
-  
-  document.getElementById('Enter').addEventListener('click', () => {
-    const input = SEARCH_INPUT.value.trim();
-    handleInput(input);
+
+  CONTAINER.addEventListener('click', (event) => {
+    const {target} = event;
+    if(target.id === ENTER) {
+      const input = SEARCH_INPUT.value.trim();
+      handleInput(input);
+    }
   });
 
   makeQuery();

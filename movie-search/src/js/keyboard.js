@@ -1,4 +1,5 @@
-import { SEARCH_INPUT as textArea, CONTAINER, enButtons, ruButtons, ruShift, enShift, keyCode, special} from './constants'
+import { SEARCH_INPUT as textArea, CONTAINER, enButtons, ruButtons, ruShift, enShift, keyCode, special, META_LEFT, SHIFT_LEFT, 
+SHIFT_RIGHT, TAB, BACKSPACE, DELETE, CAPSLOCK, ARROW_LEFT, ARROW_RIGHT, SPACE}  from './constants';
 
 let capsLock = false;
 let shift = false;
@@ -9,19 +10,19 @@ export const createMarkup = () => {
     CONTAINER.append(keyboard);
 }
 
-export const createButtons = (arr) => { 
-    for(let i = 0; i < arr.length; i+=1) {
+export const createButtons = arr => { 
+    arr.forEach((line, lineInd) => {
         const row = document.createElement('div');
         row.className = "keyboard__row";
-        for(let j = 0; j < arr[i].length; j+=1) {
+        line.forEach((elem, elemInd) => {
             const button = document.createElement('div');
             button.className = "keyboard__button";
-            button.id = keyCode[i][j];
-            button.innerHTML = arr[i][j];
+            button.id = keyCode[lineInd][elemInd];
+            button.innerHTML = arr[lineInd][elemInd];
             row.append(button);
-        }
+        });
         document.querySelector('.keyboard').append(row);
-    }
+    }); 
 }
 
 const printSymbols = id => {
@@ -91,7 +92,7 @@ const handleArrowLeft = () => {
 
 const handleArrowRight = () => {
     textArea.selectionStart += 1;
-    textArea.selectionEnd += 1;
+    textArea.selectionEnd = textArea.selectionStart;
 }
 
 const showAnimation = code => {
@@ -163,36 +164,32 @@ export const handleVirtualKeyboard = () => {
     const keyboard = document.querySelector('.keyboard');
     keyboard.addEventListener("mousedown", (event) => {
         event.preventDefault();
-        textArea.focus();
         const {id} = event.target;
-        if(id === "Tab") {
+        if(id === TAB) {
             handleTab();
         }
-        else if(id === "MetaLeft") {
+        else if(id === META_LEFT) {
             changeLanguage();
         }
-        else if(id === "ShiftLeft" || id === "ShiftRight") {
+        else if(id === SHIFT_LEFT || id === SHIFT_RIGHT) {
             replaceKeyboard(localStorage.getItem('lang') === 'en' ? enShift : ruShift);
         }
-        else if(id === "Space") {
+        else if(id === SPACE) {
             handleSpace();
         }
-        else if(id === "Backspace") {
+        else if(id === BACKSPACE) {
             handleBackspace();
         }
-        else if(id === "Delete") {
+        else if(id === DELETE) {
             handleDelete();
         }
-        else if(id === "CapsLock") {
+        else if(id === CAPSLOCK) {
             handleCapsLock();
         }
-        else if(id === 'ArrowUp' || id === 'ArrowDown') {
-            printSymbols(id);
-        }
-        else if(id === 'ArrowLeft') {
+        else if(id === ARROW_LEFT) {
             handleArrowLeft();
         }
-        else if(id === 'ArrowRight') {
+        else if(id === ARROW_RIGHT) {
             handleArrowRight();
         }
         if(isSpecial(id)) {
@@ -202,7 +199,6 @@ export const handleVirtualKeyboard = () => {
             printSymbols(id);
         }
         showAnimation(id);
-        textArea.focus();
     })
 
     keyboard.addEventListener("mouseup", (event) => {
