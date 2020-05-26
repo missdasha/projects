@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: pink;
+    color: white;
+    font-family: Montserrat,tahoma,sans-serif;
+}
+
+.wrapper {
+    padding: 0 5%;
+}
+
+.controls {
+    padding: 40px 0;
+    justify-content: space-between;
+}
+
+.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days {
+    display: flex;
+}
+
+.button {
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.refresh {
+    width: 44px;
+    background:rgba(180, 184, 187, 0.4) url(../img/refresh-bg.png) no-repeat bottom;
+    border-radius: 5px;
+}
+
+.langs {
+    margin: 0 10px;
+    width: 71px;
+    height: 44px;
+}
+
+.droplist {
+    width: 71px;
+    height: 44px;
+    padding: 0 0 0 15px;
+    outline: none;
+    border-radius: 5px;
+    background-color: rgba(174, 181, 185, 0.5);
+    border: none;
+    cursor: pointer;
+}
+
+.droplist option {
+    background-color: rgba(174, 181, 185, 0.5);
+}
+
+.droplist option:checked, .droplist option:hover {
+    background-color: rgba(76, 82, 85, 0.7);
+}
+
+.temperature {
+    width: 44px;
+    background-color: rgba(174, 181, 185, 0.5);
+}
+
+.refresh:hover, .droplist:hover, .temperature:hover, .active, .search-button:hover {
+    background: rgba(76,82,85,.7);
+}
+
+.temperature-fahrenheit {
+    border-radius: 5px 0 0 5px;
+}
+
+.temperature-сelsius {
+    border-radius: 0 5px 5px 0; 
+}
+
+.search-input {
+    width: 274px;
+    height: 44px;
+    padding: 15px 13px;
+    background: rgba(76, 82, 85, 0.4);
+    border: 1px solid rgba(228, 227, 227, 0.2);
+    border-right-width: 0;
+    border-radius: 5px 0 0 5px ; 
+    box-sizing: border-box;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.search-button {
+    width: 101px;
+    background: rgba(174, 181, 185, 0.5);
+    border-radius: 0 5px 5px 0; 
+}
+
+.location {
+    font-size: 44px;
+}
+
+.current-degrees {
+    font-size: 306px;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+.date, .current-details, .day-week {
+    font-size: 22px;
+}
+
+.day-degrees {
+    font-size: 80px;
+}
