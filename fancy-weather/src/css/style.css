@@ -15,7 +15,7 @@ body {
     justify-content: space-between;
 }
 
-.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days {
+.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days, .langs, .temperature {
     display: flex;
 }
 
@@ -36,10 +36,19 @@ body {
 
 .langs {
     margin: 0 10px;
-    width: 71px;
     height: 44px;
+    border-radius: 5px;
 }
 
+.temperature {
+    border-radius: 5px;
+}
+
+.langs div, .temperature div {
+    width: 44px;
+    background-color: rgba(174, 181, 185, 0.5);
+}
+/*
 .droplist {
     width: 71px;
     height: 44px;
@@ -58,21 +67,20 @@ body {
 .droplist option:checked, .droplist option:hover {
     background-color: rgba(76, 82, 85, 0.7);
 }
-
+*/
 .temperature {
-    width: 44px;
     background-color: rgba(174, 181, 185, 0.5);
 }
 
-.refresh:hover, .droplist:hover, .temperature:hover, .active, .search-button:hover {
+.refresh:hover, .droplist:hover, .temperature div:hover, div.active, .search-button:hover, .langs div:hover {
     background: rgba(76,82,85,.7);
 }
 
-.temperature-fahrenheit {
+.temperature-fahrenheit, #en {
     border-radius: 5px 0 0 5px;
 }
 
-.temperature-сelsius {
+.temperature-сelsius, #be {
     border-radius: 0 5px 5px 0; 
 }
 

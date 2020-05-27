@@ -17,14 +17,19 @@
                     <img src="img/refresh.svg">
                 </div>
                 <div class="langs">
-                    <select class="droplist">
+                    <!--<select class="droplist">
                         <option>EN</option>
                         <option>RU</option>
                         <option>BE</option>
-                    </select>
+                    </select>-->
+                    <div class="lang button" id="en">EN</div>
+                    <div class="lang button" id="ru">RU</div>
+                    <div class="lang button" id="be">BE</div>
                 </div>
-                <div class="temperature temperature-fahrenheit active button">°F</div>
-                <div class="temperature temperature-сelsius button">°С</div>
+                <div class="temperature">
+                    <div class="temperature-fahrenheit button" id="fahrenheit">°F</div>
+                    <div class="temperature-сelsius button" id="сelsius">°С</div>
+                </div>
             </div>
             <form class="controls__search">
                 <input class="search-input" type="search" placeholder="Search city">
