@@ -1,8 +1,8 @@
 import renderEvents from './events'
-import {getLanguage, setLanguage} from './language'
-import {getTemperature, setTemperature} from './temperature'
-import {getUserLocation, getCoordinatesByCity} from './location'
-import {getBackground} from './background'
+import { getLanguage, setLanguage } from './language'
+import { getTemperature, setTemperature } from './temperature'
+import { getUserLocation, getCoordinatesByCity } from './location'
+import { getBackground, renderBackground } from './background'
 import '../css/style.css';
 import '../css/style.scss';
 
@@ -11,7 +11,7 @@ require.context("../img", false, /\.(png|jpe?g|svg)$/);
 function success(pos) {
   const crd = pos.coords;
 
-  console.log('Ваше текущее метоположение:');
+  console.log('Ваше текущее меcтоположение:');
   console.log(`Широта: ${crd.latitude}`);
   console.log(`Долгота: ${crd.longitude}`);
   console.log(`Плюс-минус ${crd.accuracy} метров.`);
@@ -28,9 +28,12 @@ const init = async() => {
   document.getElementById(getLanguage()).classList.add('active');
   document.getElementById(getTemperature()).classList.add('active');
   renderEvents();
+
   navigator.geolocation.getCurrentPosition(success);
+
   const userLocation = await getUserLocation();
   console.log(userLocation);
+
   const coords = await getCoordinatesByCity(userLocation.city);
   console.log(coords);
   const {country} = coords.components;
@@ -41,8 +44,14 @@ const init = async() => {
   const latitude = coords.geometry.lat;
   const longitude = coords.geometry.lng;
   console.log(latitude, longitude);
-  const img = await getBackground(city);
-  console.log('await getBackground(city): ', img);
+  const timeZone = coords.annotations.timezone.name;
+  console.log(timeZone);
+
+  const img = await getBackground(city, timeZone);
+  const {regular} = img.urls;
+  renderBackground(regular);
+  
+  console.log('await getBackground(city): ', img.urls.full);
 }
 
 init();

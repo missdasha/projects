@@ -9,8 +9,11 @@ export const getUserLocation = async () => {
 
 export const getCoordinatesByCity = async city => {
     const lang = getLanguage();
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${OPENCAGEDATA_API_TOKEN}&pretty=1&no_annotations=1&language=${lang}`;
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${OPENCAGEDATA_API_TOKEN}&pretty=1&language=${lang}`;
     return fetch(url)
         .then(response => response.json())
-        .then(data => data.results[0]);
+        .then(data => {
+            console.log(data.results[0]);
+            return data.results[0];
+        });
 }
