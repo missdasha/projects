@@ -3,8 +3,10 @@ import { getLanguage, setLanguage } from './language'
 import { getTemperature, setTemperature } from './temperature'
 import { getUserLocation, getCoordinatesByCity } from './location'
 import { getBackground, renderBackground } from './background'
+import renderInfo from './render'
 import '../css/style.css';
 import '../css/style.scss';
+import getWeatherForecast from './forecast'
 
 require.context("../img", false, /\.(png|jpe?g|svg)$/);
 
@@ -46,12 +48,16 @@ const init = async() => {
   console.log(latitude, longitude);
   const timeZone = coords.annotations.timezone.name;
   console.log(timeZone);
+  localStorage.setItem('timezone', timeZone);
 
-  const img = await getBackground(city, timeZone);
+  const img = await getBackground();
   const {regular} = img.urls;
   renderBackground(regular);
-  
-  console.log('await getBackground(city): ', img.urls.full);
+
+  const forecast = await getWeatherForecast(latitude, longitude);
+  console.log(forecast);
+
+  renderInfo(city, country, forecast, latitude, longitude);
 }
 
 init();

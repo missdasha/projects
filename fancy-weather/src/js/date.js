@@ -1,7 +1,8 @@
-export const getSeason = timeZone => {
-    console.log(new Date().toLocaleString('en-GB', {timeZone, weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'}));
-    const date = new Date().toLocaleString('en-GB', {timeZone, weekday: 'short',  day: 'numeric' ,month: 'long' ,hour: '2-digit', minute: '2-digit', second: '2-digit'});
-    const month = new Date(date).getMonth() + 1;
+export const getDate = () => new Date().toLocaleString('en-GB', {timeZone: localStorage.getItem('timezone'), 
+    weekday: 'short',  day: 'numeric' ,month: 'long' ,hour: '2-digit', minute: '2-digit', second: '2-digit'});
+
+export const getSeason = () => {
+    const month = new Date(getDate()).getMonth() + 1;
     console.log(month);
     if (month <= 1 || month === 12) {
         return 'winter'; // replace with constant
@@ -15,10 +16,8 @@ export const getSeason = timeZone => {
     return 'autumn';
 }
 
-export const getDayTime = timeZone => {
-    const date = new Date().toLocaleString('en-GB', {timeZone, weekday: 'short',  day: 'numeric' ,month: 'long' ,hour: '2-digit', minute: '2-digit', second: '2-digit'});
-    console.log(Date.parse(date));
-    const hours = new Date(date).getHours();
+export const getDayTime = () => {
+    const hours = new Date(getDate()).getHours();
     console.log(hours);
     if (hours < 5) {
         return 'night';

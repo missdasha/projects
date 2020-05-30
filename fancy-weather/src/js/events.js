@@ -1,6 +1,7 @@
-import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE} from './constants'
+import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH} from './constants'
 import {setLanguage} from './language'
 import {setTemperature} from './temperature'
+import {getBackground, renderBackground} from './background'
 
 const renderEvents = () => {
     document.addEventListener('keydown', event => {
@@ -25,7 +26,6 @@ const renderEvents = () => {
         setLanguage(target.id);
     });
       
-
     BUTTON_TEMPERATURE.addEventListener('click', event => {
         const {target} = event;
         BUTTON_TEMPERATURE.children.forEach(button => {
@@ -34,6 +34,13 @@ const renderEvents = () => {
           target.classList.add('active');
           setTemperature(target.id);
     });
+
+    BUTTON_REFRESH.addEventListener('click', async () => {
+      const img = await getBackground();
+      const {regular} = img.urls;
+      renderBackground(regular);
+    })
+
 }
 
 export default renderEvents;

@@ -21,7 +21,7 @@ body {
     justify-content: space-between;
 }
 
-.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days, .langs, .temperature {
+.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days, .langs, .temperature, .day-wrapper {
     display: flex;
 }
 
@@ -120,7 +120,7 @@ body {
 }
 
 .current-degrees {
-    font-size: 306px;
+    font-size: 250px;
 }
 
 h1, h2, h3, p {
@@ -134,4 +134,19 @@ h1, h2, h3, p {
 
 .day-degrees {
     font-size: 80px;
+}
+
+.current-icon {
+    width: 200px;
+    height: 200px;
+    margin-top: -50px;
+}
+
+.current-details {
+    margin-bottom: 5px;
+}
+
+.day-icon {
+    width: 80px;
+    height: 80px;
 }
