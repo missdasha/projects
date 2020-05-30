@@ -10,6 +10,10 @@ export const UNSPLASH_API_TOKEN = 'TdwoihXSFNrstI-z8Ul89VK56omx4O1_bO9EWEkUMns';
 // export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
 export const WHEATHERBIT_API_TOKEN = 'fd424af990004c9cae11910b2512681f';
 export const imagePath = 'https://www.amcharts.com/wp-content/themes/amcharts4/css/img/icons/weather/animated/';
+export const options = {timeZone: localStorage.getItem('timezone'), 
+weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
+export const optionsWithYear = {timeZone: localStorage.getItem('timezone'), year: 'numeric',
+weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
 
 export const translations = {
     en: {
@@ -35,6 +39,7 @@ export const translations = {
         "ms": "м/с",
         "humidity": "Влажность:",
         "day": ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+        "shortDay": ["Вск", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
         "month": ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"],
         "lat": "Широта",
         "lng": "Долгота",
@@ -48,6 +53,7 @@ export const translations = {
         "ms": "м/с",
         "humidity": "Вільготнасць:",
         "day": ["Нядзеля", "Панядзелак", "Аўторак", "Серада", "Чацвер", "Пятнiца", "Субота"],
+        "shortDay": ["Нядз", "Пн", "Аўт", "Сер", "Чацв", "Пт", "Сб"],
         "month": [
             "Студзеня",
             "Лютага",
