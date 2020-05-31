@@ -3,8 +3,8 @@ import { getLanguage } from './language';
 import { getTemperature } from './temperature'
 import { convertToFahrenheit } from './convertion'
 import { getCurrentDate, translateDate, changeTime } from './date'
-
-export const countAverage = (a, b) => Math.floor((a + b) / 2);
+import getMapbox from './mapbox';
+import { countAverage, changeFormat } from './utils'
 
 const renderDays = (forecast, lang) => {
     let html = ``;
@@ -60,8 +60,17 @@ const renderInfo = (city, country, forecast, latitude, longitude) => {
                 ${renderDays(forecast.slice(1), lang)}
             </div>
         </div>
-        <div class="map"></div>`;
+        <div class="mapbox">
+            <div class="coordinates">
+                <p>${translations[lang].lat} ${changeFormat(+latitude)}</p>
+                <p>${translations[lang].lng} ${changeFormat(+longitude)}</p>
+            </div>
+        </div>`;
+    const map = document.createElement('div');
+    map.id = 'map';
     document.querySelector('.wrapper').append(main);
+    document.querySelector('.mapbox').prepend(map);
+    getMapbox(latitude, longitude);
     setInterval(changeTime, 1000);
 }
 

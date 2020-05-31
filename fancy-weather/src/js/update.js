@@ -6,7 +6,8 @@ import { setTemperature, getTemperature } from './temperature'
 import getWeatherForecast from './forecast'
 import { getBackground, renderBackground } from './background'
 import { translateDate, getCurrentDate, changeTime } from './date'
-import { countAverage } from './render'
+import { countAverage, changeFormat } from './utils'
+import getMapbox from './mapbox'
 
 export const updateTemperature = temp => {
     const convert = (temp !== "сelsius") ? convertToFahrenheit : convertToCelsius;
@@ -39,6 +40,11 @@ export const updateLanguage = async (lang) => {
         console.log(pos);
         elem.innerText = translations[lang].day[pos];
     });
+
+    const latitude = document.querySelector('.coordinates p:first-child');
+    latitude.innerText = latitude.innerText.replace(REGEXP, translations[lang].lat);
+    const longitude = document.querySelector('.coordinates p:last-child');
+    longitude.innerText = longitude.innerText.replace(REGEXP, translations[lang].lng);
 
     setLanguage(lang);
 
@@ -112,5 +118,10 @@ export const updateInfo = async (location) => {
         elem.querySelector('.day-degrees').innerText = `${getTemperature() === 'сelsius' ? temp : convertToFahrenheit(temp)}`;
         elem.querySelector('.day-icon').src = `${imagePath}${translations.weather[forecast[ind+1].weather.code]}`;
     });
+
+    document.querySelector('.coordinates p:first-child').innerText = `${translations[lang].lat} ${changeFormat(+latitude)}`;
+    document.querySelector('.coordinates p:last-child').innerText = `${translations[lang].lng} ${changeFormat(+longitude)}`;
+
+    getMapbox(latitude, longitude);
     setInterval(changeTime, 1000);
 }

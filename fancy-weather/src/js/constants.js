@@ -6,13 +6,13 @@ export const BUTTON_TEMPERATURE = document.querySelector('.temperature');
 export const BUTTON_REFRESH = document.querySelector('.refresh');
 export const IPINFO_API_TOKEN = 'dd369ceb01b0bd';
 export const OPENCAGEDATA_API_TOKEN = '6232b50466a04b0db0ba1d373c025c89';
-// export const UNSPLASH_API_TOKEN = 'TdwoihXSFNrstI-z8Ul89VK56omx4O1_bO9EWEkUMns';
-export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
+export const UNSPLASH_API_TOKEN = 'TdwoihXSFNrstI-z8Ul89VK56omx4O1_bO9EWEkUMns';
+// export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
 export const WHEATHERBIT_API_TOKEN = 'fd424af990004c9cae11910b2512681f';
 export const imagePath = 'https://www.amcharts.com/wp-content/themes/amcharts4/css/img/icons/weather/animated/';
 export const options = { weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
 export const optionsWithYear = { year: 'numeric', weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
-export const REGEXP = new RegExp('[а-яa-zі]+:', 'i');
+export const REGEXP = new RegExp('[а-яa-zіў]+:', 'i');
 
 export const translations = {
     en: {
@@ -26,8 +26,8 @@ export const translations = {
         "month": [
           "January", "February", "March", "April", "May", "June", "July", "August", "September", 
           "October", "November", "December"],
-        "lat": "Latitude",
-        "lng": "Longitude",
+        "lat": "Latitude:",
+        "lng": "Longitude:",
         "error": "There is no such place"
     },
     ru: {
@@ -40,8 +40,8 @@ export const translations = {
         "day": ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
         "shortDay": ["Вск", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
         "month": ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"],
-        "lat": "Широта",
-        "lng": "Долгота",
+        "lat": "Широта:",
+        "lng": "Долгота:",
         "error": "Нет такого места"
     },
     be: {
@@ -67,8 +67,8 @@ export const translations = {
             "Лістапада",
             "Снежня"
         ],
-        "lat": "Шырата",
-        "lng": "Даўгата",
+        "lat": "Шырата:",
+        "lng": "Даўгата:",
         "error": "Няма такога месца"
     },
     weather: {

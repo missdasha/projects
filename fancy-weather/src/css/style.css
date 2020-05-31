@@ -19,9 +19,19 @@ body {
     justify-content: space-between;
 }
 
-.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days, .langs, 
-.temperature, .day-wrapper {
+.controls, .controls__buttons, .controls__search, .weather__today, .weather__days, .langs, 
+.temperature, .day-wrapper, main {
     display: flex;
+}
+
+main {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.weather {
+    width: 70%;
+    max-width: 750px;
 }
 
 .button {
@@ -108,7 +118,7 @@ h1, h2, h3, p {
     padding: 0;
 }
 
-.date, .current-details, .day-week {
+.date, .current-details, .day-week, .coordinates {
     font-size: 22px;
 }
 
@@ -141,4 +151,9 @@ h1, h2, h3, p {
 
 .wind, .feel {
     display: inline-flex;
+}
+
+#map {
+    width: 300px;
+    height: 300px;
 }
