@@ -34,7 +34,7 @@ const renderInfo = (city, country, forecast, latitude, longitude) => {
     const temperature = Math.round(forecast[0].temp);
     const averageTemp = countAverage(forecast[0].app_max_temp, forecast[0].app_min_temp);
     const isCelsius = getTemperature() === "сelsius";
-    options.timezone = localStorage.getItem('timezone');
+    options.timeZone = localStorage.getItem('timezone');
     const currDate = lang !== 'en' ? translateDate(lang) : getCurrentDate(options).replace(/,/g, '');
 
     main.innerHTML = `

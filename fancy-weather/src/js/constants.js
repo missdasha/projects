@@ -10,10 +10,8 @@ export const OPENCAGEDATA_API_TOKEN = '6232b50466a04b0db0ba1d373c025c89';
 export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
 export const WHEATHERBIT_API_TOKEN = 'fd424af990004c9cae11910b2512681f';
 export const imagePath = 'https://www.amcharts.com/wp-content/themes/amcharts4/css/img/icons/weather/animated/';
-export const options = {/* timeZone: localStorage.getItem('timezone'), */
-weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
-export const optionsWithYear = {/* timeZone: localStorage.getItem('timezone'), */ year: 'numeric',
-weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
+export const options = { weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
+export const optionsWithYear = { year: 'numeric', weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
 export const REGEXP = new RegExp('[а-яa-zі]+:', 'i');
 
 export const translations = {

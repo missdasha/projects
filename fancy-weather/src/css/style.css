@@ -1,10 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    /* background-color: pink; */
     color: white;
     font-family: Montserrat,tahoma,sans-serif;
-    /* background-blend-mode: overlay;*/ 
     background-repeat: no-repeat;
     background-size: cover;
     background-position-x: center, center;
@@ -22,8 +20,8 @@ body {
 }
 
 .controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days, .langs, 
-.temperature, .day-wrapper, .feel, .wind {
-    display: inline-flex;
+.temperature, .day-wrapper {
+    display: flex;
 }
 
 .button {
@@ -55,26 +53,7 @@ body {
     width: 44px;
     background-color: rgba(174, 181, 185, 0.5);
 }
-/*
-.droplist {
-    width: 71px;
-    height: 44px;
-    padding: 0 0 0 15px;
-    outline: none;
-    border-radius: 5px;
-    background-color: rgba(174, 181, 185, 0.5);
-    border: none;
-    cursor: pointer;
-}
 
-.droplist option {
-    background-color: rgba(174, 181, 185, 0.5);
-}
-
-.droplist option:checked, .droplist option:hover {
-    background-color: rgba(76, 82, 85, 0.7);
-}
-*/
 .temperature {
     background-color: rgba(174, 181, 185, 0.5);
 }
@@ -158,4 +137,8 @@ h1, h2, h3, p {
 
 .day-wrapper .degree {
     font-size: 80px;
+}
+
+.wind, .feel {
+    display: inline-flex;
 }

@@ -5,7 +5,7 @@ import { getCoordinatesByCity } from './location'
 import { setTemperature, getTemperature } from './temperature'
 import getWeatherForecast from './forecast'
 import { getBackground, renderBackground } from './background'
-import { translateDate, getCurrentDate } from './date'
+import { translateDate, getCurrentDate, changeTime } from './date'
 import { countAverage } from './render'
 
 export const updateTemperature = temp => {
@@ -81,7 +81,7 @@ export const updateInfo = async (location) => {
     // location
     document.querySelector('.location').innerText = stringLocation;
     // current date
-    options.timezone = localStorage.getItem('timezone');
+    options.timeZone = localStorage.getItem('timezone');
     const currDate = lang !== 'en' ? translateDate(lang) : getCurrentDate(options).replace(/,/g, '');
     document.querySelector('.date').innerText = currDate;
     // current-degrees
@@ -112,6 +112,5 @@ export const updateInfo = async (location) => {
         elem.querySelector('.day-degrees').innerText = `${getTemperature() === 'сelsius' ? temp : convertToFahrenheit(temp)}`;
         elem.querySelector('.day-icon').src = `${imagePath}${translations.weather[forecast[ind+1].weather.code]}`;
     });
-
-
+    setInterval(changeTime, 1000);
 }

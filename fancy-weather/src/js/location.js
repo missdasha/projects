@@ -1,4 +1,4 @@
-import { IPINFO_API_TOKEN, OPENCAGEDATA_API_TOKEN } from './constants'
+import { IPINFO_API_TOKEN, OPENCAGEDATA_API_TOKEN, INPUT_SEARCH, translations } from './constants'
 import { getLanguage } from './language';
 
 export const getUserLocation = async () => {
@@ -13,7 +13,13 @@ export const getCoordinatesByCity = async (city) => {
     return fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data.results[0]);
+            if(!data.results.length || data.status.code !== 200)
+                throw new Error(data.status.message);
+            console.log(data);
             return data.results[0];
+        })
+        .catch(() => {
+            INPUT_SEARCH.value = '';
+            INPUT_SEARCH.placeholder = translations[lang].error;
         });
 }

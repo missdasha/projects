@@ -1,11 +1,10 @@
 import { translations, options, optionsWithYear } from './constants'
 import { getLanguage } from './language'
 
-export const getCurrentDate = (opts) => {
-    console.log(opts);
-    return new Date().toLocaleString('en-GB', opts); }
+export const getCurrentDate = opts => new Date().toLocaleString('en-GB', opts); 
 
 export const translateDate = (lang) => {
+    optionsWithYear.timeZone = localStorage.getItem('timezone');
     const currDate = new Date(getCurrentDate(optionsWithYear));
     const weekDay = currDate.getDay();
     const month = currDate.getMonth() + 1;
@@ -17,7 +16,7 @@ export const translateDate = (lang) => {
 }
 
 export const getSeason = () => {
-    options.timezone = localStorage.getItem('timezone');
+    options.timeZone = localStorage.getItem('timezone');
     const month = new Date(getCurrentDate(options)).getMonth() + 1;
     console.log(new Date(getCurrentDate(options)), options);
     console.log(month);
@@ -34,7 +33,6 @@ export const getSeason = () => {
 }
 
 export const getDayTime = () => {
-    options.timezone = localStorage.getItem('timezone');
     const hours = new Date(getCurrentDate(options)).getHours();
     console.log(hours);
     if (hours < 5) {
@@ -51,7 +49,7 @@ export const getDayTime = () => {
 
 
 export const changeTime = () => {
-    options.timezone = localStorage.getItem('timezone');
+    options.timeZone = localStorage.getItem('timezone');
     const lang = getLanguage();
     document.querySelector('.date').innerHTML = lang !== 'en' ? translateDate(lang) : getCurrentDate(options).replace(/,/g, '');
 }
