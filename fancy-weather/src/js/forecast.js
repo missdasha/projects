@@ -2,7 +2,7 @@ import { WHEATHERBIT_API_TOKEN } from './constants'
 import { getLanguage } from './language';
 import { getTemperature } from './temperature'
 
-const getWeatherForecast = (lat, lon) => { 
+const getWeatherForecast = async (lat, lon) => { 
     console.log(getTemperature());
     const lang = getLanguage();
     console.log(lat, lon);

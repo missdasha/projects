@@ -7,7 +7,7 @@ export const getUserLocation = async () => {
         .then(response => response.json());
 }
 
-export const getCoordinatesByCity = async city => {
+export const getCoordinatesByCity = async (city) => {
     const lang = getLanguage();
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${OPENCAGEDATA_API_TOKEN}&pretty=1&language=${lang}`;
     return fetch(url)

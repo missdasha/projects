@@ -6,14 +6,15 @@ export const BUTTON_TEMPERATURE = document.querySelector('.temperature');
 export const BUTTON_REFRESH = document.querySelector('.refresh');
 export const IPINFO_API_TOKEN = 'dd369ceb01b0bd';
 export const OPENCAGEDATA_API_TOKEN = '6232b50466a04b0db0ba1d373c025c89';
-export const UNSPLASH_API_TOKEN = 'TdwoihXSFNrstI-z8Ul89VK56omx4O1_bO9EWEkUMns';
-// export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
+// export const UNSPLASH_API_TOKEN = 'TdwoihXSFNrstI-z8Ul89VK56omx4O1_bO9EWEkUMns';
+export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
 export const WHEATHERBIT_API_TOKEN = 'fd424af990004c9cae11910b2512681f';
 export const imagePath = 'https://www.amcharts.com/wp-content/themes/amcharts4/css/img/icons/weather/animated/';
-export const options = {timeZone: localStorage.getItem('timezone'), 
+export const options = {/* timeZone: localStorage.getItem('timezone'), */
 weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
-export const optionsWithYear = {timeZone: localStorage.getItem('timezone'), year: 'numeric',
+export const optionsWithYear = {/* timeZone: localStorage.getItem('timezone'), */ year: 'numeric',
 weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
+export const REGEXP = new RegExp('[а-яa-zі]+:', 'i');
 
 export const translations = {
     en: {
@@ -21,7 +22,7 @@ export const translations = {
         "search": "Search",
         "feel": "Feels like:",
         "wind": "Wind:",
-        "ms": "m/s",
+        "ms": " m/s",
         "humidity": "Humidity:",
         "day": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         "month": [
@@ -33,10 +34,10 @@ export const translations = {
     },
     ru: {
         "placeholder": "Введите город",
-        "search": "Gоиск",
+        "search": "Поиск",
         "feel": "Ощущается как:",
         "wind": "Ветер:",
-        "ms": "м/с",
+        "ms": " м/с",
         "humidity": "Влажность:",
         "day": ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
         "shortDay": ["Вск", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -50,7 +51,7 @@ export const translations = {
         "search": "Пошук",
         "feel": "Адчуваецца як:",
         "wind": "Вецер:",
-        "ms": "м/с",
+        "ms": " м/с",
         "humidity": "Вільготнасць:",
         "day": ["Нядзеля", "Панядзелак", "Аўторак", "Серада", "Чацвер", "Пятнiца", "Субота"],
         "shortDay": ["Нядз", "Пн", "Аўт", "Сер", "Чацв", "Пт", "Сб"],

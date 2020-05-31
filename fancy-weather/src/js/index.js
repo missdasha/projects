@@ -4,13 +4,14 @@ import { getTemperature, setTemperature } from './temperature'
 import { getUserLocation, getCoordinatesByCity } from './location'
 import { getBackground, renderBackground } from './background'
 import renderInfo from './render'
+import { INPUT_SEARCH, BUTTON_SEARCH, translations } from './constants'
 import '../css/style.css';
 import '../css/style.scss';
 import getWeatherForecast from './forecast'
 
 require.context("../img", false, /\.(png|jpe?g|svg)$/);
 
-function success(pos) {
+/* function success(pos) {
   const crd = pos.coords;
 
   console.log('Ваше текущее меcтоположение:');
@@ -18,9 +19,9 @@ function success(pos) {
   console.log(`Долгота: ${crd.longitude}`);
   console.log(`Плюс-минус ${crd.accuracy} метров.`);
 };
-
+*/
 const init = async() => {
-  console.log(getLanguage());
+  const lang = getLanguage();
   if (!getLanguage()) {
     setLanguage('en'); // replace with constant
   } 
@@ -29,13 +30,13 @@ const init = async() => {
   } 
   document.getElementById(getLanguage()).classList.add('active');
   document.getElementById(getTemperature()).classList.add('active');
-  renderEvents();
-
-  navigator.geolocation.getCurrentPosition(success);
+  INPUT_SEARCH.placeholder = translations[lang].placeholder;
+  BUTTON_SEARCH.innerText = translations[lang].search;
+  // navigator.geolocation.getCurrentPosition(success);
 
   const userLocation = await getUserLocation();
   console.log(userLocation);
-
+  localStorage.setItem('city', userLocation.city);
   const coords = await getCoordinatesByCity(userLocation.city);
   console.log(coords);
   const {country} = coords.components;
@@ -46,6 +47,8 @@ const init = async() => {
   const latitude = coords.geometry.lat;
   const longitude = coords.geometry.lng;
   console.log(latitude, longitude);
+  localStorage.setItem('latitude', latitude);
+  localStorage.setItem('longitude', longitude);
   const timeZone = coords.annotations.timezone.name;
   console.log(timeZone);
   localStorage.setItem('timezone', timeZone);
@@ -58,6 +61,7 @@ const init = async() => {
   console.log(forecast);
 
   renderInfo(city, country, forecast, latitude, longitude);
+  renderEvents();
 }
 
 init();

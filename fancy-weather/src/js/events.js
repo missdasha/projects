@@ -1,7 +1,8 @@
 import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH} from './constants'
-import {setLanguage} from './language'
-import {setTemperature} from './temperature'
+import {getLanguage} from './language'
+import {getTemperature} from './temperature'
 import {getBackground, renderBackground} from './background'
+import {updateTemperature, updateLanguage, updateInfo} from './update'
 
 const renderEvents = () => {
     document.addEventListener('keydown', event => {
@@ -9,30 +10,36 @@ const renderEvents = () => {
           event.preventDefault();
           const input = INPUT_SEARCH.value;
           console.log(input);
+          updateInfo(input);
         }
     });
       
     BUTTON_SEARCH.addEventListener('click', () => {
         const input = INPUT_SEARCH.value;
         console.log(input);
+        updateInfo(input);
     });
       
     BUTTON_LANGS.addEventListener('click', event => {
         const {target} = event;
-        BUTTON_LANGS.children.forEach(button => {
-          button.classList.remove('active');
-        });
-        target.classList.add('active');
-        setLanguage(target.id);
+        if(target.id !== getLanguage()) {
+          BUTTON_LANGS.children.forEach(button => {
+            button.classList.remove('active');
+          });
+          target.classList.add('active');
+          updateLanguage(target.id);
+        }
     });
       
     BUTTON_TEMPERATURE.addEventListener('click', event => {
         const {target} = event;
-        BUTTON_TEMPERATURE.children.forEach(button => {
+        if(target.id !== getTemperature()) {
+          BUTTON_TEMPERATURE.children.forEach(button => {
             button.classList.remove('active');
           });
           target.classList.add('active');
-          setTemperature(target.id);
+          updateTemperature(target.id);
+        }
     });
 
     BUTTON_REFRESH.addEventListener('click', async () => {

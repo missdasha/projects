@@ -21,8 +21,9 @@ body {
     justify-content: space-between;
 }
 
-.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days, .langs, .temperature, .day-wrapper {
-    display: flex;
+.controls, .controls__buttons, .controls__search, .main, .weather__today, .weather__days, .langs, 
+.temperature, .day-wrapper, .feel, .wind {
+    display: inline-flex;
 }
 
 .button {
@@ -149,4 +150,12 @@ h1, h2, h3, p {
 .day-icon {
     width: 80px;
     height: 80px;
+}
+
+.weather__today .degree {
+    font-size: 180px;
+}
+
+.day-wrapper .degree {
+    font-size: 80px;
 }
