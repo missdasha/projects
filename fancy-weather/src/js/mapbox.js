@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // import mapboxgl from 'mapbox-gl';
 
 const getMapbox = (latitude, longitude) => {
@@ -6,8 +7,12 @@ const getMapbox = (latitude, longitude) => {
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [longitude, latitude],
-        zoom: 13
+        zoom: 10
     });
+    const marker = new mapboxgl.Marker()
+        .setLngLat([longitude, latitude])
+        .addTo(map);
+    return map;
 }
 
 export default getMapbox;

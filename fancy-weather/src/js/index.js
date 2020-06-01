@@ -55,12 +55,12 @@ const init = async() => {
 
   const img = await getBackground();
   const {regular} = img.urls;
-  renderBackground(regular);
-
+  
   const forecast = await getWeatherForecast(latitude, longitude);
   console.log(forecast);
 
   renderInfo(city, country, forecast, latitude, longitude);
+  renderBackground(regular);
   renderEvents();
 }
 

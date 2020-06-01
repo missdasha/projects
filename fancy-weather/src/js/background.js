@@ -14,6 +14,10 @@ export const renderBackground = img => {
     const bgImage = new Image();
     bgImage.onload = () => {
         document.body.style.backgroundImage = `linear-gradient(rgba(8, 15, 26, 0.59), rgba(17, 17, 46, 0.46)), url(${img})`;
+        bgImage.remove();
+    };
+    bgImage.onerror = () => {
+        document.body.style.backgroundImage = `linear-gradient(rgba(8, 15, 26, 0.59), rgba(17, 17, 46, 0.46)), url(../img/default.jpg)`;
     };
     bgImage.src = img;
     

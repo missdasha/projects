@@ -8,8 +8,10 @@
   ],
   "scripts": {
     "dev": "webpack-dev-server --history-api-fallback --inline --open",
-    "build": "npm run clear -s && webpack --progress",
-    "lint": "eslint ./**/*.js"
+    "build": "webpack",
+    "lint": "eslint ./**/*.js",
+    "test": "jest",
+    "clear": "del-cli dist"
   },
   "author": "Netizen",
   "license": "ISC",
@@ -26,6 +28,7 @@
     "css-loader": "^3.2.0",
     "css-mqpacker": "^7.0.0",
     "cssnano": "^4.1.10",
+    "del-cli": "^3.0.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.5.0",
@@ -35,8 +38,9 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^6.0.0",
+    "jest": "^26.0.1",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^4.14.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
@@ -44,7 +48,7 @@
     "url-loader": "^4.1.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
     "core-js": "^3.4.7",

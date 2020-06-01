@@ -135,10 +135,6 @@ const config = {
       // {from: './src/static', to: './'},
       // {from: './src/img', to: './img/'},
     ]),
-    /*new HtmlWebPackPlugin({
-      template: './src/section.html',
-      filename: './section.html'
-    }),*/
   ],
 
   devServer: {
