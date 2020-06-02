@@ -33,9 +33,8 @@ export const getSeason = () => {
     return 'autumn';
 }
 
-export const getDayTime = () => {
-    const hours = new Date(getCurrentDate(options)).getHours();
-    console.log(hours);
+
+export const defineDayTime = hours => {
     if (hours < 5) {
         return 'night';
     }
@@ -48,6 +47,10 @@ export const getDayTime = () => {
     return 'evening';
 }
 
+export const getDayTime = () => {
+    const hours = new Date(getCurrentDate(options)).getHours();
+    return defineDayTime(hours);
+}
 
 export const changeTime = () => {
     options.timeZone = localStorage.getItem('timezone');

@@ -1,4 +1,4 @@
-const { getSeason } = require('../js/date');
+const { getSeason, defineDayTime } = require('../js/date');
 
 describe('getSeason', () => {
     // const options = { weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
@@ -13,5 +13,20 @@ describe('getSeason', () => {
     });
     it('should return correct season', () => {
         expect(season).toEqual(expected);
+    });
+});
+
+describe('defineDayTime', () => {
+    const expected = 'evening';
+    const hours = 18;
+    let dayTime;
+    beforeEach(() => {
+        dayTime = defineDayTime(hours);
+    })
+    it('should return the result which is defined', () => {
+        expect(dayTime).toBeDefined();
+    });
+    it('should return correct day time', () => {
+        expect(dayTime).toEqual(expected);
     });
 });
