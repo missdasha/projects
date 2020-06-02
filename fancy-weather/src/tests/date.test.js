@@ -1,9 +1,9 @@
 const { getSeason, defineDayTime } = require('../js/date');
 
 describe('getSeason', () => {
-    // const options = { weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
     let season;
     localStorage.setItem('timezone', 'Europe/Minsk');
+    localStorage.setItem('latitude', 53);
     const expected = 'summer';
     beforeEach(() => {
         season = getSeason();

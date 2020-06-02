@@ -66,7 +66,7 @@ export const updateInfo = async (location) => {
     const latitude = coords.geometry.lat;
     const longitude = coords.geometry.lng;
     console.log(latitude, longitude);
-    localStorage.setItem('latitude', latitude); // to end
+    localStorage.setItem('latitude', latitude);
     localStorage.setItem('longitude', longitude);
     const timeZone = coords.annotations.timezone.name;
     console.log(timeZone);

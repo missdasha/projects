@@ -18,19 +18,19 @@ export const translateDate = (lang) => {
 export const getSeason = () => {
     options.timeZone = localStorage.getItem('timezone');
     console.log('options.timeZone: ', options.timeZone);
-
+    const isNorthern = localStorage.getItem('latitude') > 0;
     const month = new Date(getCurrentDate(options)).getMonth() + 1;
     console.log(month);
-    if (month <= 1 || month === 12) {
-        return 'winter';
+    if (month <= 2 || month === 12) {
+        return isNorthern ? 'winter' : 'summer';
     }
     if (month >= 3 && month <= 5) {
-        return 'spring';
+        return isNorthern ? 'spring' : 'autumn';
     }
     if (month >= 6 && month <= 8) {
-        return 'summer';
+        return isNorthern ? 'summer' : 'winter';
     }
-    return 'autumn';
+    return isNorthern ? 'autumn' : 'spring';
 }
 
 
