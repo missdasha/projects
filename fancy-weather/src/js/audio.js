@@ -5,7 +5,6 @@ import { MICROPHONE, isVoiceSearchEnabled } from './constants'
 import { getLanguage } from './language'
 
 const getLocationBySpeech = () => {
-    console.log(isVoiceSearchEnabled);
     isVoiceSearchEnabled.key = true;
     console.log('hello');
     window.speechRecognition = window.webkitSpeechRecognition || window.speechRecognition;
@@ -29,8 +28,8 @@ const getLocationBySpeech = () => {
     });
    
     recognition.addEventListener('end', () => {
-        MICROPHONE.classList.remove('micro-active');
         if(isVoiceSearchEnabled.key) {
+            MICROPHONE.classList.remove('micro-active');
             updateInfo(city);
             isVoiceSearchEnabled.key = !isVoiceSearchEnabled.key;
         }
