@@ -37,7 +37,6 @@ export const updateLanguage = async (lang) => {
         const elem = el;
         const valueToTranslate = el.innerText;
         const pos = translations[prevLang].day.indexOf(valueToTranslate);
-        console.log(pos);
         elem.innerText = translations[lang].day[pos];
     });
 
@@ -58,22 +57,17 @@ export const updateLanguage = async (lang) => {
 
 export const updateInfo = async (location) => {
     const coords = await getCoordinatesByCity(location);
-    console.log(coords);
     const city = coords.components.state;
     localStorage.setItem('city', city);
     const stringLocation = coords.formatted;
-    console.log('stringLocation: ', stringLocation);
     const latitude = coords.geometry.lat;
     const longitude = coords.geometry.lng;
-    console.log(latitude, longitude);
     localStorage.setItem('latitude', latitude);
     localStorage.setItem('longitude', longitude);
     const timeZone = coords.annotations.timezone.name;
-    console.log(timeZone);
     localStorage.setItem('timezone', timeZone);
   
     const forecast = await getWeatherForecast(latitude, longitude);
-    console.log(forecast);
 
     const img = await getBackground();
     const {regular} = img.urls;
@@ -121,6 +115,8 @@ export const updateInfo = async (location) => {
 
     document.querySelector('.coordinates p:first-child').innerText = `${translations[lang].lat} ${changeFormat(+latitude)}`;
     document.querySelector('.coordinates p:last-child').innerText = `${translations[lang].lng} ${changeFormat(+longitude)}`;
+
+    INPUT_SEARCH.placeholder = translations[lang].placeholder;
 
     getMapbox(latitude, longitude);
     setInterval(changeTime, 1000);

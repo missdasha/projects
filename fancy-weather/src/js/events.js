@@ -54,7 +54,7 @@ const renderEvents = () => {
         getLocationBySpeech();
       }
       else {
-        isVoiceSearchEnabled.key = !isVoiceSearchEnabled.key;
+        isVoiceSearchEnabled.key = false;
         MICROPHONE.classList.remove('micro-active');
       }
     })

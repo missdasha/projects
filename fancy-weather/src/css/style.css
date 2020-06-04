@@ -254,7 +254,11 @@ h1, h2, h3, p {
         align-items: center;
         margin: 0 auto;
     }
-
+    
+    .weather__info {
+        margin-bottom: 36px;
+    }
+    
     .location {
         font-size: 32px;
     }
