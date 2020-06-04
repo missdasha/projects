@@ -4,6 +4,7 @@ export const BUTTON_SEARCH = document.querySelector('.search-button');
 export const BUTTON_LANGS = document.querySelector('.langs');
 export const BUTTON_TEMPERATURE = document.querySelector('.temperature');
 export const BUTTON_REFRESH = document.querySelector('.refresh');
+export const MICROPHONE = document.querySelector('.micro');
 export const IPINFO_API_TOKEN = 'dd369ceb01b0bd';
 export const OPENCAGEDATA_API_TOKEN = '6232b50466a04b0db0ba1d373c025c89';
 export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
@@ -13,7 +14,8 @@ export const imagePath = 'https://www.amcharts.com/wp-content/themes/amcharts4/c
 export const options = { weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
 export const optionsWithYear = { year: 'numeric', weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
 export const REGEXP = new RegExp('[а-яa-zіў]+:', 'i');
-
+export const seasons = { winter: 'winter', spring: 'spring', summer: 'summer', autumn: 'autumn'};
+export const dayTimes = { night: 'night', morning: 'morning', afternoon: 'afternoon', evening: 'evening'};
 export const translations = {
     en: {
         "placeholder": "Enter city",
@@ -53,20 +55,8 @@ export const translations = {
         "humidity": "Вільготнасць:",
         "day": ["Нядзеля", "Панядзелак", "Аўторак", "Серада", "Чацвер", "Пятнiца", "Субота"],
         "shortDay": ["Нядз", "Пн", "Аўт", "Сер", "Чацв", "Пт", "Сб"],
-        "month": [
-            "Студзеня",
-            "Лютага",
-            "Сакавіка",
-            "Красавіка",
-            "Мая",
-            "Чэрвеня",
-            "Ліпеня",
-            "Жнівеня",
-            "Верасня",
-            "Кастрычніка",
-            "Лістапада",
-            "Снежня"
-        ],
+        "month": ["Студзеня", "Лютага", "Сакавіка", "Красавіка", "Мая", "Чэрвеня", "Ліпеня", "Жнівеня", "Верасня", 
+            "Кастрычніка", "Лістапада", "Снежня"],
         "lat": "Шырата:",
         "lng": "Даўгата:",
         "error": "Няма такога месца"

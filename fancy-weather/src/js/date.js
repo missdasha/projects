@@ -1,4 +1,4 @@
-import { translations, options, optionsWithYear } from './constants'
+import { translations, options, optionsWithYear, seasons, dayTimes } from './constants'
 import { getLanguage } from './language'
 
 export const getCurrentDate = opts => new Date().toLocaleString('en-GB', opts); 
@@ -17,34 +17,31 @@ export const translateDate = (lang) => {
 
 export const getSeason = () => {
     options.timeZone = localStorage.getItem('timezone');
-    console.log('options.timeZone: ', options.timeZone);
     const isNorthern = localStorage.getItem('latitude') > 0;
     const month = new Date(getCurrentDate(options)).getMonth() + 1;
-    console.log(month);
     if (month <= 2 || month === 12) {
-        return isNorthern ? 'winter' : 'summer';
+        return isNorthern ? seasons.winter : seasons.summer;
     }
     if (month >= 3 && month <= 5) {
-        return isNorthern ? 'spring' : 'autumn';
+        return isNorthern ? seasons.spring : seasons.autumn;
     }
     if (month >= 6 && month <= 8) {
-        return isNorthern ? 'summer' : 'winter';
+        return isNorthern ? seasons.summer : seasons.winter;
     }
-    return isNorthern ? 'autumn' : 'spring';
+    return isNorthern ? seasons.autumn : seasons.spring;
 }
-
 
 export const defineDayTime = hours => {
     if (hours < 5) {
-        return 'night';
+        return dayTimes.night;
     }
     if (hours < 12) {
-        return 'morning'; // replace with constant
+        return dayTimes.morning;
     }
     if (hours < 18) {
-        return 'afternoon';
+        return dayTimes.afternoon;
     }
-    return 'evening';
+    return dayTimes.evening;
 }
 
 export const getDayTime = () => {

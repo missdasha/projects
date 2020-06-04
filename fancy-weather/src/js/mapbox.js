@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-// import mapboxgl from 'mapbox-gl';
 
 const getMapbox = (latitude, longitude) => {
     mapboxgl.accessToken = 'pk.eyJ1IjoibWlzc2Rhc2hhOCIsImEiOiJja2F2NjkwMjgwbXI3MnFwZzN4NGFkZWNxIn0.lIalGKVbJY9_aIqdSDtxXQ';

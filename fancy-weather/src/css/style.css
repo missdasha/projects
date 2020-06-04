@@ -83,6 +83,11 @@ main {
     border-radius: 0 5px 5px 0; 
 }
 
+
+.controls__search {
+    position: relative;
+}
+
 .search-input {
     width: 274px;
     height: 44px;
@@ -179,6 +184,23 @@ h1, h2, h3, p {
 
 .mapboxgl-ctrl-bottom-right>.mapboxgl-ctrl-attrib.mapboxgl-compact:after {
     display: none;
+}
+
+.micro {
+    background-image: url(../img/micro.svg);
+    width: 40px;
+    position: absolute;
+    right: 101px;
+    height: 43px;
+    background-size: 17px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.micro:hover, .micro-active {
+   transform: scale(1.2);
+   filter: invert(58%) sepia(69%) saturate(2416%) hue-rotate(313deg) brightness(92%) contrast(96%);
+   cursor: pointer;
 }
 
 @media (max-width: 1019px) {

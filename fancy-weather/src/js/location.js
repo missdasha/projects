@@ -2,7 +2,6 @@ import { IPINFO_API_TOKEN, OPENCAGEDATA_API_TOKEN, INPUT_SEARCH, translations } 
 import { getLanguage } from './language';
 
 export const getUserLocation = async () => {
-    console.log(IPINFO_API_TOKEN, 'dd369ceb01b0bd');
     return fetch(`https://ipinfo.io/json?token=${IPINFO_API_TOKEN}`)
         .then(response => response.json());
 }
@@ -15,7 +14,6 @@ export const getCoordinatesByCity = async (city) => {
         .then(data => {
             if(!data.results.length || data.status.code !== 200)
                 throw new Error(data.status.message);
-            console.log(data);
             return data.results[0];
         })
         .catch(() => {

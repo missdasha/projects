@@ -4,7 +4,7 @@ import { getSeason, getDayTime } from './date'
 export const getBackground = async () => {
     const season = getSeason();
     const dayTime = getDayTime();
-    console.log(season, dayTime);
+    console.log(`getBackground(${season}, ${dayTime}`);
     const url = `https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query={${season},${dayTime},city}&client_id=${UNSPLASH_API_TOKEN}`;
     return fetch(url)
         .then((response) => response.json());

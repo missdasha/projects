@@ -13,7 +13,6 @@ const renderDays = (forecast, lang) => {
     forecast.forEach((el, ind) => {
         temperature = Math.floor(el.temp);
         weekDay = (new Date(el.datetime)).getDay();
-        console.log(weekDay);
         html += `
         <div class="day">
          <p class="day-week">${translations[lang].day[weekDay]}</p>

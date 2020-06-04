@@ -96,7 +96,7 @@ export const updateInfo = async (location) => {
     document.querySelector('.current-icon').src =`${imagePath}${translations.weather[code]}`;
     // description
     document.querySelector('.description').innerText = `${forecast[0].weather.description}`;
-    // feelsLike
+    // feels like
     const feelsLike = document.querySelector('.feel');
     feelsLike.innerText = translations[lang].feel;
     feelsLike.nextSibling.innerText = ` ${isCelsius? averageTemp : convertToFahrenheit(averageTemp)}`;
