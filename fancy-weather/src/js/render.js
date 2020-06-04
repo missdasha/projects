@@ -61,8 +61,8 @@ const renderInfo = (city, country, forecast, latitude, longitude) => {
         </div>
         <div class="mapbox">
             <div class="coordinates">
-                <p>${translations[lang].lat} ${changeFormat(+latitude)}</p>
-                <p>${translations[lang].lng} ${changeFormat(+longitude)}</p>
+                <p>${translations[lang].lat} ${changeFormat(latitude)}</p>
+                <p>${translations[lang].lng} ${changeFormat(longitude)}</p>
             </div>
         </div>`;
     const map = document.createElement('div');

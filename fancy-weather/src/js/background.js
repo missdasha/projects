@@ -14,7 +14,6 @@ export const getBackground = async () => {
                 INPUT_SEARCH.value = '';
                 INPUT_SEARCH.placeholder = translations[lang].keyError;
             }
-            console.log(response);
             return response.json();
         });
 }

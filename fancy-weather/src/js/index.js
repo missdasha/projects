@@ -33,7 +33,6 @@ const init = async() => {
   const longitude = coords.geometry.lng;
   localStorage.setItem('latitude', latitude);
   localStorage.setItem('longitude', longitude);
-  
   const timeZone = coords.annotations.timezone.name;
   localStorage.setItem('timezone', timeZone);
 
