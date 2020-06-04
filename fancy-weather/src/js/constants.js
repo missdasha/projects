@@ -16,6 +16,7 @@ export const optionsWithYear = { year: 'numeric', weekday: 'short',  day: 'numer
 export const REGEXP = new RegExp('[а-яa-zіў]+:', 'i');
 export const seasons = { winter: 'winter', spring: 'spring', summer: 'summer', autumn: 'autumn'};
 export const dayTimes = { night: 'night', morning: 'morning', afternoon: 'afternoon', evening: 'evening'};
+export const isVoiceSearchEnabled = { key: false};
 export const translations = {
     en: {
         "placeholder": "Enter city",

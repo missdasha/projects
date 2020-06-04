@@ -95,7 +95,7 @@ export const updateInfo = async (location) => {
     // current-icon
     document.querySelector('.current-icon').src =`${imagePath}${translations.weather[code]}`;
     // description
-    document.querySelector('.description').innerText = `${forecast[0].weather.description}`;
+    document.querySelector('.description').innerText = forecast[0].weather.description;
     // feels like
     const feelsLike = document.querySelector('.feel');
     feelsLike.innerText = translations[lang].feel;
@@ -114,7 +114,7 @@ export const updateInfo = async (location) => {
         const elem = el;
         temp = Math.round(forecast[ind+1].temp);
         weekDay = (new Date(forecast[ind+1].datetime)).getDay();
-        elem.querySelector('.day-week').innerText = `${translations[lang].day[weekDay]}`;
+        elem.querySelector('.day-week').innerText = translations[lang].day[weekDay];
         elem.querySelector('.day-degrees').innerText = `${getTemperature() === 'сelsius' ? temp : convertToFahrenheit(temp)}`;
         elem.querySelector('.day-icon').src = `${imagePath}${translations.weather[forecast[ind+1].weather.code]}`;
     });

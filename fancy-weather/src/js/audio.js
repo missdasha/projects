@@ -1,17 +1,19 @@
 /* eslint-disable no-undef */
 /* eslint-disable new-cap */
 import { updateInfo } from './update'
-import { MICROPHONE } from './constants'
+import { MICROPHONE, isVoiceSearchEnabled } from './constants'
 import { getLanguage } from './language'
 
 const getLocationBySpeech = () => {
+    console.log(isVoiceSearchEnabled);
+    isVoiceSearchEnabled.key = true;
     console.log('hello');
     window.speechRecognition = window.webkitSpeechRecognition || window.speechRecognition;
     const recognition = new webkitSpeechRecognition();
     recognition.interimResults = true;
     recognition.lang = getLanguage() === 'en' ? 'en-US' : 'ru-RU';
 
-    let city = 'Minsk';
+    let city = localStorage.getItem('city');
     
     recognition.addEventListener('result', (e) => {
         console.log('asda');
@@ -21,14 +23,17 @@ const getLocationBySpeech = () => {
             .join('');
         city = transcript;
         console.log(city);
-       if(e.results[0].isFinal) {
-          recognition.stop();
+        if(e.results[0].isFinal) {
+            recognition.stop();
         }
     });
    
     recognition.addEventListener('end', () => {
         MICROPHONE.classList.remove('micro-active');
-        updateInfo(city);
+        if(isVoiceSearchEnabled.key) {
+            updateInfo(city);
+            isVoiceSearchEnabled.key = !isVoiceSearchEnabled.key;
+        }
     });
 
     MICROPHONE.classList.add('micro-active');

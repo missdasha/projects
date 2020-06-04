@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable new-cap */
-import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH, MICROPHONE} from './constants'
+import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH, MICROPHONE, isVoiceSearchEnabled} from './constants'
 import {getLanguage} from './language'
 import {getTemperature} from './temperature'
 import {getBackground, renderBackground} from './background'
@@ -50,7 +50,13 @@ const renderEvents = () => {
     });
 
     MICROPHONE.addEventListener('click', () => {
-      getLocationBySpeech();
+      if(!isVoiceSearchEnabled.key) {
+        getLocationBySpeech();
+      }
+      else {
+        MICROPHONE.classList.remove('micro-active');
+        isVoiceSearchEnabled.key = !isVoiceSearchEnabled.key;
+      }
     })
 }
 
