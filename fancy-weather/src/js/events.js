@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable new-cap */
-import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH, MICROPHONE, isVoiceSearchEnabled} from './constants'
+import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH, IMAGE_REFRESH, MICROPHONE, isVoiceSearchEnabled} from './constants'
 import {getLanguage} from './language'
 import {getTemperature} from './temperature'
 import {getBackground, renderBackground} from './background'
@@ -44,9 +44,11 @@ const renderEvents = () => {
     });
 
     BUTTON_REFRESH.addEventListener('click', async () => {
+      IMAGE_REFRESH.classList.add('rotate');
       const img = await getBackground();
       const {regular} = img.urls;
       renderBackground(regular);
+      IMAGE_REFRESH.classList.remove('rotate');
     });
 
     MICROPHONE.addEventListener('click', () => {

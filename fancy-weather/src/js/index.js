@@ -5,9 +5,9 @@ import { getUserLocation, getCoordinatesByCity } from './location'
 import { getBackground, renderBackground } from './background'
 import renderInfo from './render'
 import { INPUT_SEARCH, BUTTON_SEARCH, translations } from './constants'
-import '../css/style.css';
-import '../css/style.scss';
 import getWeatherForecast from './forecast'
+import '../css/style.css';
+
 
 require.context("../img", false, /\.(png|jpe?g|svg)$/);
 

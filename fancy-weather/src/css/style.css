@@ -71,7 +71,11 @@ main {
     background-color: rgba(174, 181, 185, 0.5);
 }
 
-.refresh:hover, .droplist:hover, .temperature div:hover, div.active, .search-button:hover, .langs div:hover {
+.refresh:hover, .droplist:hover, .temperature div:hover, .search-button:hover, .langs div:hover {
+    background: rgba(192, 195, 196, 0.75);
+}
+
+div.active {
     background: rgba(76,82,85,.7);
 }
 
@@ -282,6 +286,11 @@ h1, h2, h3, p {
         width: 184px;
     }
 
+    .search-input::placeholder {
+        color: #FFFFFF;
+        font-size: 12px;
+    }
+    
     .current-details {
         font-size: 16px;
     }
@@ -303,3 +312,25 @@ h1, h2, h3, p {
         margin-top: 20px;
     }
 }
+
+.rotate {
+    animation: 0.5s linear 0s normal none infinite running rot;
+    -webkit-animation: 0.5s linear 0s normal none infinite running rot;
+}
+
+  @keyframes rot {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes rot {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
