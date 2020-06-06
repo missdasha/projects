@@ -1,11 +1,13 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-undef */
-/* eslint-disable new-cap */
-import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH, IMAGE_REFRESH, MICROPHONE, isVoiceSearchEnabled} from './constants'
+
+import {ENTER_KEYCODE, INPUT_SEARCH, BUTTON_SEARCH, BUTTON_LANGS, BUTTON_TEMPERATURE, BUTTON_REFRESH, 
+  IMAGE_REFRESH, MICROPHONE, PLAY, isVoiceSearchEnabled} from './constants'
 import {getLanguage} from './language'
 import {getTemperature} from './temperature'
 import {getBackground, renderBackground} from './background'
 import {updateTemperature, updateLanguage, updateInfo} from './update'
-import getLocationBySpeech from './audio'
+import {getLocationBySpeech, listenToWeatherForecast} from './audio'
 
 const renderEvents = () => {
     document.addEventListener('keydown', event => {
@@ -59,6 +61,10 @@ const renderEvents = () => {
         isVoiceSearchEnabled.key = false;
         MICROPHONE.classList.remove('micro-active');
       }
+    });
+
+    PLAY.addEventListener('click', async () => {
+      listenToWeatherForecast();
     })
 }
 

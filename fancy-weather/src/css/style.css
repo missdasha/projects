@@ -71,7 +71,7 @@ main {
     background-color: rgba(174, 181, 185, 0.5);
 }
 
-.refresh:hover, .droplist:hover, .temperature div:hover, .search-button:hover, .langs div:hover {
+.refresh:hover, .droplist:hover, .temperature div:hover, .search-button:hover, .langs div:hover, .play:hover {
     background: rgba(192, 195, 196, 0.75);
 }
 
@@ -207,7 +207,28 @@ h1, h2, h3, p {
    cursor: pointer;
 }
 
+.play {
+    width: 44px;
+    border-radius: 5px;
+    background: rgba(180,184,187,.4) no-repeat center center;
+    margin-left: 10px;
+}
+
+.play img {
+    width: 15px;
+    height: 15px;
+    filter: invert(98%) sepia(3%) saturate(172%) hue-rotate(317deg) brightness(116%) contrast(100%);
+}
+
+.play:hover img, .play .play-active {
+    filter: invert(58%) sepia(69%) saturate(2416%) hue-rotate(313deg) brightness(92%) contrast(96%);
+}
+
 @media (max-width: 1019px) {
+    .search-input {
+        width: 246px;
+    }
+
     main {
         flex-direction: column;
     }
@@ -231,6 +252,10 @@ h1, h2, h3, p {
 }
 
 @media (max-width: 767px) {
+    .langs div, .temperature div, .refresh, .play {
+        width: 40px;
+    }
+
     .controls {
         align-items: center;
         flex-direction: column;
@@ -283,7 +308,7 @@ h1, h2, h3, p {
 
 @media (max-width: 375px) {
     .search-input {
-        width: 184px;
+        width: 208px;
     }
 
     .search-input::placeholder {

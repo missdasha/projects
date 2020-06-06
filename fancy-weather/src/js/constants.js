@@ -6,10 +6,11 @@ export const BUTTON_TEMPERATURE = document.querySelector('.temperature');
 export const BUTTON_REFRESH = document.querySelector('.refresh');
 export const IMAGE_REFRESH = document.querySelector('.refresh img');
 export const MICROPHONE = document.querySelector('.micro');
+export const PLAY = document.querySelector('.play');
 export const IPINFO_API_TOKEN = 'dd369ceb01b0bd';
 export const OPENCAGEDATA_API_TOKEN = '6232b50466a04b0db0ba1d373c025c89';
-export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
-// export const UNSPLASH_API_TOKEN = 'TdwoihXSFNrstI-z8Ul89VK56omx4O1_bO9EWEkUMns';
+// export const UNSPLASH_API_TOKEN = 'alpfdxmMt9lZmTGArar3W6E9QPRPgVwsbsaOtd50PpM';
+export const UNSPLASH_API_TOKEN = 'TdwoihXSFNrstI-z8Ul89VK56omx4O1_bO9EWEkUMns';
 export const WHEATHERBIT_API_TOKEN = 'fd424af990004c9cae11910b2512681f';
 export const imagePath = 'https://www.amcharts.com/wp-content/themes/amcharts4/css/img/icons/weather/animated/';
 export const options = { weekday: 'short',  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit'};
@@ -33,7 +34,7 @@ export const translations = {
         "lat": "Latitude:",
         "lng": "Longitude:",
         "error": "There is no such place",
-        "keyError": "Limit exceeded"
+        "keyError": "Limit exceeded",
     },
     ru: {
         "placeholder": "Введите город",
@@ -48,7 +49,7 @@ export const translations = {
         "lat": "Широта:",
         "lng": "Долгота:",
         "error": "Нет такого места",
-        "keyError": "Лимит исчерпан"
+        "keyError": "Лимит исчерпан",
     },
     be: {
         "placeholder": "Увядзіце горад",
