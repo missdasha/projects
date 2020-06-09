@@ -1,0 +1,10 @@
+export const LEVEL = document.getElementById('level');
+export const PAGE = document.getElementById('page');
+export const WORDS = document.querySelector('.game__words');
+export const FIELD = document.querySelector('.game__field');
+export const BUTTON_START = document.querySelector('.button-start');
+export const START_SCREEN = document.querySelector('.start-screen');
+export const GAME = document.querySelector('.game');
+export const BUTTON_GIVE_UP = document.querySelector('.button-give-up');
+export const BUTTON_CHECK = document.querySelector('.button-check');
+export const BUTTON_CONTINUE = document.querySelector('.button-continue');

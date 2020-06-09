@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Montserrat', tahoma, sans-serif;
+}
+
+.start-screen { 
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../img/bg.jpg);
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.button {
+    background-color: #ae6687;
+    border: none;
+    border-radius: 3px;
+    padding: 7px 40px;
+    margin: 0 10px;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #cc769d;
+}
+
+p {
+    margin: 32px;
+}
+
+label {
+    font-size: 1.5rem;
+    color: grey;
+}
+
+input {
+    padding: 5px;
+    text-align: center;
+}
+
+.game {
+    justify-content: center;
+    display: flex;
+}
+
+.game__content {
+    padding: 20px 0;
+}
+
+.game__field{
+    width: 875px;
+    height: 350px;
+    background-color: #d8bfd8;
+}
+
+.row {
+    height: 35px;
+    display: flex;
+}
+
+.game__words {
+    width: 875px;
+    height: 35px;
+    background-color: #d8bfd8;
+    display: flex;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+
+.word {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid grey;
+    box-sizing: border-box;
+}
+
+.game__buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.none {
+    display: none;
+}
