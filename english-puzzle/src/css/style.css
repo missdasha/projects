@@ -36,7 +36,7 @@ h1 {
     outline: none;
 }
 
-.button:hover {
+.button:hover, div.chosen:hover {
     background-color: #cc769d;
 }
 
@@ -55,18 +55,23 @@ input {
 }
 
 .game {
-    justify-content: center;
     display: flex;
+    justify-content: center;
 }
 
 .game__content {
     padding: 20px 0;
 }
 
+.game__menu {
+    display: flex;
+    justify-content: space-between;
+}
+
 .game__field{
     width: 875px;
     height: 350px;
-    background-color: #d8bfd8;
+    border: 1px solid #dad8d8;
 }
 
 .row {
@@ -77,7 +82,7 @@ input {
 .game__words {
     width: 875px;
     height: 35px;
-    background-color: #d8bfd8;
+    border: 1px solid #dad8d8;
     display: flex;
     margin: 20px 0;
     justify-content: space-between;
@@ -89,6 +94,7 @@ input {
     justify-content: center;
     border: 1px solid grey;
     box-sizing: border-box;
+    background-color: #dad8d8;
 }
 
 .game__buttons {
@@ -98,4 +104,53 @@ input {
 
 .none {
     display: none;
+}
+
+.correct {
+    background: #b3deb8;
+}
+
+.wrong {
+    background: #dea3a3;
+}
+
+.options {
+    display: flex;
+}
+
+.option {
+    width: 30px;
+    background-color: #c6c5c5;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #dad8d8;
+}
+
+.option img {
+    width: 20px;
+    height: 20px;
+}
+
+.sound, .translation {
+    margin-left: 8px;
+}
+
+.hint__translation {
+    color: grey;
+    text-align: center;
+}
+
+.chosen {
+    background-color: #ae6687;
+}
+
+.hidden {
+    visibility: hidden;
 }

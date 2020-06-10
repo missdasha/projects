@@ -8,3 +8,5 @@ export const GAME = document.querySelector('.game');
 export const BUTTON_GIVE_UP = document.querySelector('.button-give-up');
 export const BUTTON_CHECK = document.querySelector('.button-check');
 export const BUTTON_CONTINUE = document.querySelector('.button-continue');
+export const BUTTON_TRANSLATION = document.querySelector('.translation');
+export const HINT_TRANSLATION = document.querySelector('.hint__translation');

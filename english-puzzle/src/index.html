@@ -22,12 +22,27 @@
     <div class="game none">
         <div class="game__content">
             <div class="game__menu">
-                <label for="level">Level</label>
-                <input id="level" name="level" value="1" type="number" min="1" max="6" required>
-                <label for="page">Page</label>
-                <input id="page" name="page" value="1" type="number" min="1" max="60" required>
+                <div class="switches">
+                    <label for="level">Level</label>
+                    <input id="level" name="level" value="1" type="number" min="1" max="6" required>
+                    <label for="page">Page</label>
+                    <input id="page" name="page" value="1" type="number" min="1" max="60" required>
+                </div>
+                <div class="options">
+                    <div class="dynamic option chosen">
+                        <img src="img/icons8-dynamic.png">
+                    </div>
+                    <div class="translation option chosen">
+                        <img src="img/icons8-translation.png">
+                    </div>
+                    <div class="sound option chosen">
+                        <img src="img/icons8-music.png">
+                    </div>
+                </div>
             </div>
-            <div class="game__hints"></div>
+            <div class="game__hints">
+                <div class="hint__translation"></div>
+            </div>
             <div class="game__field"></div>
             <div class="game__words"></div>
             <div class="game__buttons">
