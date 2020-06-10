@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import '../css/style.css';
 import { LEVEL, PAGE, WORDS, FIELD, BUTTON_START, START_SCREEN, GAME, BUTTON_GIVE_UP, BUTTON_CHECK, BUTTON_CONTINUE,
-  HINT_TRANSLATION, BUTTON_TRANSLATION } from './constants'
+  HINT_TRANSLATION, BUTTON_TRANSLATION, BUTTON_DYNAMIC, BUTTON_SOUND, HINT_DYNAMIC } from './constants'
 
 let pageWords = [];
 let wordsArray = [];
@@ -9,10 +9,16 @@ let phraseNumber = 0;
 let phraseLength;
 let audio;
 
-const playAudio = isExample => {
-  const path = isExample ? pageWords[phraseNumber].audioExample : pageWords[phraseNumber].audio;
-  audio = new Audio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
-  audio.play();
+const playAudio = () => {
+  console.log(localStorage.getItem('pronunciation'));
+  if (localStorage.getItem('pronunciation') === 'true') {
+    console.log(localStorage.getItem('pronunciation'));
+    HINT_DYNAMIC.classList.add('active');
+    const path = pageWords[phraseNumber].audioExample;
+    audio = new Audio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
+    audio.play();
+    audio.addEventListener('ended', () => HINT_DYNAMIC.classList.remove('active'));
+  }
 } 
 
 const getWords = (level, page) => {
@@ -42,20 +48,84 @@ const renderWords = () => {
 const handleLevelsAndPagesChanges = async () => {
   const level = LEVEL.value - 1;
   const round = PAGE.value;
-  console.log(PAGE.innerHTML);
   const page = Math.ceil(round / 2) - 1;
+
   const words = await getWords(level, page);
   console.log(words);
   pageWords = round % 2 === 0 ? words.slice(10) : words.slice(0, 10);
+
   renderWords();
+
   HINT_TRANSLATION.innerText = pageWords[phraseNumber].textExampleTranslate;
-  playAudio(true);
-  setTimeout(() => playAudio(false), 5000);
+  if (localStorage.getItem('translation') === 'false') {
+    HINT_TRANSLATION.classList.add('hidden');
+  }
+  if (localStorage.getItem('automatic') === 'true' && localStorage.getItem('pronunciation') === 'true') {
+      playAudio();
+  }
 }
+
+const showHints = () => {
+  if (localStorage.getItem('translation') === 'false') {
+    HINT_TRANSLATION.classList.remove('hidden');
+    setTimeout(() => HINT_TRANSLATION.classList.add('hidden'), 3000);
+  }
+  if (localStorage.getItem('automatic') === 'false' || localStorage.getItem('pronunciation') === 'false') {
+    localStorage.setItem('pronunciation', true);
+    playAudio();
+    localStorage.setItem('pronunciation', false);
+}
+}
+
+const checkSavedOptions = () => {
+  if (localStorage.getItem('automatic') === null) {
+    console.log(1);
+    localStorage.setItem('automatic', true);
+    localStorage.setItem('translation', true);
+    localStorage.setItem('pronunciation', true);
+  }
+  console.log(localStorage.getItem('automatic'));
+  console.log(localStorage.getItem('translation'));
+  console.log(localStorage.getItem('pronunciation'));
+  if (localStorage.getItem('automatic') === 'true') { 
+    BUTTON_DYNAMIC.classList.add('chosen');
+  }
+  if (localStorage.getItem('translation') === 'true') { 
+    BUTTON_TRANSLATION.classList.add('chosen');
+  }
+  if (localStorage.getItem('pronunciation') === 'true') { 
+    BUTTON_SOUND.classList.add('chosen');
+  }
+}
+
+HINT_DYNAMIC.addEventListener('click', () => {
+  playAudio();
+})
+
+BUTTON_SOUND.addEventListener('click', () => {
+  BUTTON_SOUND.classList.toggle('chosen');
+  const isChosen = !(localStorage.getItem('pronunciation')  === 'true');
+  localStorage.setItem('pronunciation', isChosen);
+  if (isChosen && localStorage.getItem('automatic') === 'true') {
+    playAudio();
+  }
+})
+
+BUTTON_DYNAMIC.addEventListener('click', () => {
+  BUTTON_DYNAMIC.classList.toggle('chosen');
+  const isChosen = !(localStorage.getItem('automatic')  === 'true');
+  localStorage.setItem('automatic', isChosen);
+  console.log(localStorage.getItem('automatic'));
+  if (isChosen && localStorage.getItem('pronunciation') === 'true') {
+    playAudio();
+  }
+})
 
 BUTTON_TRANSLATION.addEventListener('click', () => {
   BUTTON_TRANSLATION.classList.toggle('chosen');
   HINT_TRANSLATION.classList.toggle('hidden');
+  const isChosen = !(localStorage.getItem('translation')  === 'true');
+  localStorage.setItem('translation', isChosen);
 })
 
 WORDS.addEventListener('click', event => {
@@ -69,6 +139,12 @@ WORDS.addEventListener('click', event => {
 })
 
 BUTTON_CONTINUE.addEventListener('click', () => {
+  if (localStorage.getItem('translation') === 'false') {
+    HINT_TRANSLATION.classList.add('hidden');
+  }
+  else {
+    HINT_TRANSLATION.classList.remove('hidden');
+  }
   if (phraseNumber < 9) {
     phraseNumber += 1;
   }
@@ -121,6 +197,7 @@ BUTTON_GIVE_UP.addEventListener('click', () => {
   BUTTON_GIVE_UP.classList.add('none');
   BUTTON_CHECK.classList.add('none');
   BUTTON_CONTINUE.classList.remove('none');
+  showHints();
 })
 
 LEVEL.addEventListener('input', () => {
@@ -154,6 +231,7 @@ PAGE.addEventListener('input', () => {
 BUTTON_START.addEventListener('click', () => {
   START_SCREEN.classList.add('none');
   GAME.classList.remove('none');
+  checkSavedOptions();
   handleLevelsAndPagesChanges();
 })
 

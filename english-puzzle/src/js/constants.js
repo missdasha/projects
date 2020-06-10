@@ -9,4 +9,7 @@ export const BUTTON_GIVE_UP = document.querySelector('.button-give-up');
 export const BUTTON_CHECK = document.querySelector('.button-check');
 export const BUTTON_CONTINUE = document.querySelector('.button-continue');
 export const BUTTON_TRANSLATION = document.querySelector('.translation');
+export const BUTTON_DYNAMIC = document.querySelector('.dynamic');
+export const BUTTON_SOUND = document.querySelector('.sound');
 export const HINT_TRANSLATION = document.querySelector('.hint__translation');
+export const HINT_DYNAMIC = document.querySelector('.hint__dynamic');

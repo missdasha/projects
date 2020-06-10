@@ -142,9 +142,26 @@ input {
     margin-left: 8px;
 }
 
+.game__hints {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
 .hint__translation {
+    width: 875px;
     color: grey;
     text-align: center;
+    margin: 2px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.hint__dynamic {
+    width: 26px;
+    filter: invert(15%) sepia(0%) saturate(0%) hue-rotate(154deg) brightness(88%) contrast(87%);
+    cursor: pointer;
 }
 
 .chosen {
@@ -153,4 +170,8 @@ input {
 
 .hidden {
     visibility: hidden;
+}
+
+.active {
+    filter: invert(45%) sepia(12%) saturate(1523%) hue-rotate(280deg) brightness(100%) contrast(90%);
 }
