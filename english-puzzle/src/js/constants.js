@@ -17,3 +17,4 @@ export const HINT_TRANSLATION = document.querySelector('.hint__translation');
 export const HINT_DYNAMIC = document.querySelector('.hint__dynamic');
 export const DONT_KNOW = document.querySelector('.dont-know');
 export const KNOW = document.querySelector('.know');
+export const PHRASES = document.querySelector('.results__phrases');

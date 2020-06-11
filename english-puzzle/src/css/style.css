@@ -40,7 +40,7 @@ h1 {
     background-color: #cc769d;
 }
 
-p {
+.start-screen p {
     margin: 32px;
 }
 
@@ -96,6 +96,7 @@ input {
     border: 1px solid grey;
     box-sizing: border-box;
     background-color: #dad8d8;
+    cursor: pointer;
 }
 
 .game__buttons {
@@ -198,6 +199,20 @@ input {
     height: 20px;
 }
 
+.results__phrases {
+    height: 380px;
+    overflow-y: scroll;
+}
+
+.results__phrases p{
+   cursor: pointer;
+}
+
 .results__phrases .hint__dynamic {
     margin-right: 10px;
+}
+
+.results__button .button-continue {
+    margin-top: 20px;
+    text-align: center;
 }

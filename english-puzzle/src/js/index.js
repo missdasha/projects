@@ -250,8 +250,6 @@ BUTTON_CONTINUE.addEventListener('click', () => {
     BUTTON_RESULTS.classList.remove('none');
   }
   else {
-    // GAME.classList.remove('none');
-    // RESULTS.classList.add('none');
     BUTTON_RESULTS.classList.add('none');
     FIELD.innerHTML = '';
     phraseNumber = 0;
@@ -260,8 +258,6 @@ BUTTON_CONTINUE.addEventListener('click', () => {
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CONTINUE.classList.add('none');
   }
-  // BUTTON_GIVE_UP.classList.remove('none');
-  // BUTTON_CONTINUE.classList.add('none');
 })
 
 BUTTON_CHECK.addEventListener('click', () => {
