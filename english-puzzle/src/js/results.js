@@ -14,10 +14,11 @@ const showResults = (pageWords, phrasesGiveUp) => {
             KNOW.insertAdjacentHTML('beforeend', `<div data-audio="${phrase.audioExample}">${audio}<p>${sentence}<br>${translation}</p></div>`);
         }
     });
+    phrasesGiveUp.splice(0);
 }
 
 PHRASES.addEventListener('click', event => {
-    if (event.target.tagName !== 'B') {
+    if (event.target.tagName === 'P' || event.target.className !== 'hint__dynamic' || event.target.tagName !== 'IMG') {
         const element = event.target.closest('[data-audio]');
         const dynamic = element.firstChild;
         dynamic.classList.add('active')

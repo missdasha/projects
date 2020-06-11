@@ -106,6 +106,20 @@ const checkSavedOptions = () => {
   }
 }
 
+const setLastRound = () => {
+  const last = {'level': LEVEL.value, 'round': PAGE.value};
+  localStorage.setItem('last', JSON.stringify(last));
+}
+
+const checkLastRound = () => {
+  if (localStorage.getItem('last')) {
+    const last = JSON.parse(localStorage.getItem('last'));
+    console.log(last.level, last.round);
+    LEVEL.value = +last.level;
+    PAGE.value = +last.round + 1;
+  }
+}
+
 HINT_DYNAMIC.addEventListener('click', () => {
   playAudio();
 })
@@ -216,17 +230,17 @@ WORDS.addEventListener('click', event => {
 
 BUTTON_RESULTS.addEventListener('click', () => {
   document.querySelector('.results .button-continue').addEventListener('click', () => {
-    GAME.classList.remove('none');
     RESULTS.classList.add('none');
     BUTTON_RESULTS.classList.add('none');
     FIELD.innerHTML = '';
     phraseNumber = 0;
-    PAGE.value = +PAGE.value + 1;
+    console.log(PAGE.value);
     handleLevelsAndPagesChanges();
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CONTINUE.classList.add('none');
     DONT_KNOW.innerHTML = '';
     KNOW.innerHTML = '';
+    GAME.classList.remove('none');
   })
   showResults(pageWords, phrasesGiveUp);
 })
@@ -248,12 +262,13 @@ BUTTON_CONTINUE.addEventListener('click', () => {
   else if (phraseNumber === 9) {
     phraseNumber += 1;
     BUTTON_RESULTS.classList.remove('none');
+    setLastRound();
+    PAGE.value = +PAGE.value + 1;
   }
   else {
     BUTTON_RESULTS.classList.add('none');
     FIELD.innerHTML = '';
     phraseNumber = 0;
-    PAGE.value = +PAGE.value + 1;
     handleLevelsAndPagesChanges();
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CONTINUE.classList.add('none');
@@ -338,6 +353,7 @@ PAGE.addEventListener('input', () => {
 BUTTON_START.addEventListener('click', () => {
   START_SCREEN.classList.add('none');
   GAME.classList.remove('none');
+  checkLastRound();
   checkSavedOptions();
   handleLevelsAndPagesChanges();
 })
