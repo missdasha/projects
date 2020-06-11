@@ -5,7 +5,7 @@ body {
     font-family: 'Montserrat', tahoma, sans-serif;
 }
 
-.start-screen { 
+.start-screen, .results { 
     margin: 0;
     padding: 0;
     width: 100vw;
@@ -89,6 +89,7 @@ input {
 }
 
 .word {
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,4 +175,29 @@ input {
 
 .active {
     filter: invert(45%) sepia(12%) saturate(1523%) hue-rotate(280deg) brightness(100%) contrast(90%);
+}
+
+.results__content {
+    width: 510px;
+    height: 540px;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background-color: white;
+    color: grey;
+    text-align: left;
+}
+
+.dont-know > div, .know > div {
+    display: flex;
+    align-items: center;
+}
+
+.dont-know img, .know img {
+    width: 20px;
+    height: 20px;
+}
+
+.results__phrases .hint__dynamic {
+    margin-right: 10px;
 }

@@ -1,13 +1,16 @@
+/* eslint-disable no-inner-declarations */
 /* eslint-disable no-alert */
 import '../css/style.css';
 import { LEVEL, PAGE, WORDS, FIELD, BUTTON_START, START_SCREEN, GAME, BUTTON_GIVE_UP, BUTTON_CHECK, BUTTON_CONTINUE,
-  HINT_TRANSLATION, BUTTON_TRANSLATION, BUTTON_DYNAMIC, BUTTON_SOUND, HINT_DYNAMIC } from './constants'
+  HINT_TRANSLATION, BUTTON_TRANSLATION, BUTTON_DYNAMIC, BUTTON_SOUND, HINT_DYNAMIC, BUTTON_RESULTS, RESULTS, DONT_KNOW, KNOW } from './constants'
+import showResults from './results'
 
 let pageWords = [];
 let wordsArray = [];
 let phraseNumber = 0;
 let phraseLength;
 let audio;
+const phrasesGiveUp = [];
 
 const playAudio = () => {
   console.log(localStorage.getItem('pronunciation'));
@@ -28,13 +31,22 @@ const getWords = (level, page) => {
 
 const shuffle = words => words.sort(() => Math.random() - 0.5)
 
+const prepareHints = () => {
+  HINT_TRANSLATION.innerText = pageWords[phraseNumber].textExampleTranslate;
+  if (localStorage.getItem('translation') === 'false') {
+    HINT_TRANSLATION.classList.add('hidden');
+  }
+  if (localStorage.getItem('automatic') === 'true' && localStorage.getItem('pronunciation') === 'true') {
+      playAudio();
+  }
+}
+
 const renderWords = () => {
   const wordsStr = pageWords[phraseNumber].textExample.slice(0, -1).replace('<b>', '').replace('</b>', '');
   wordsArray = wordsStr.split(' ');
   const words = shuffle(wordsStr.split(' '));
   phraseLength = wordsStr.replace(/\s+/g, '').length;
-  console.log(pageWords[phraseNumber].textExample.slice(0, -1).replace('<b>', '').replace('</b>', '').replace(' ', ''));
-  console.log(phraseLength);
+
   let elements = '';
   const fieldWidth = FIELD.clientWidth;
   words.forEach(word => {
@@ -43,6 +55,9 @@ const renderWords = () => {
   });
   WORDS.innerHTML = elements;
   FIELD.insertAdjacentHTML('beforeend', `<div class="row"></div>`);
+  if (phraseNumber) {
+    prepareHints();
+  }
 }
 
 const handleLevelsAndPagesChanges = async () => {
@@ -55,14 +70,7 @@ const handleLevelsAndPagesChanges = async () => {
   pageWords = round % 2 === 0 ? words.slice(10) : words.slice(0, 10);
 
   renderWords();
-
-  HINT_TRANSLATION.innerText = pageWords[phraseNumber].textExampleTranslate;
-  if (localStorage.getItem('translation') === 'false') {
-    HINT_TRANSLATION.classList.add('hidden');
-  }
-  if (localStorage.getItem('automatic') === 'true' && localStorage.getItem('pronunciation') === 'true') {
-      playAudio();
-  }
+  prepareHints();
 }
 
 const showHints = () => {
@@ -74,7 +82,7 @@ const showHints = () => {
     localStorage.setItem('pronunciation', true);
     playAudio();
     localStorage.setItem('pronunciation', false);
-}
+  }
 }
 
 const checkSavedOptions = () => {
@@ -127,7 +135,75 @@ BUTTON_TRANSLATION.addEventListener('click', () => {
   const isChosen = !(localStorage.getItem('translation')  === 'true');
   localStorage.setItem('translation', isChosen);
 })
+/*
+let currentDroppable = null;
 
+WORDS.addEventListener('mousedown', event => {
+  const word = event.target;
+  if (word.className === 'word') {
+    const shiftX = event.clientX - word.getBoundingClientRect().left;
+    const shiftY = event.clientY - word.getBoundingClientRect().top;
+
+    word.style.position = 'absolute';
+    word.style.zIndex = 1000;
+    document.body.append(word);
+
+    function moveAt(pageX, pageY) {
+      word.style.left = `${pageX - shiftX}px`;
+      word.style.top = `${pageY - shiftY}px`;
+    }
+
+    moveAt(event.pageX, event.pageY);
+
+    
+    function enterDroppable(elem) {
+      const el = elem;
+      el.style.background = 'pink';
+    }
+
+    function leaveDroppable(elem) {
+      const el = elem;
+      el.style.background = '';
+    }
+
+    function onMouseMove(e) {
+      moveAt(e.pageX, e.pageY);
+
+      word.hidden = true;
+      const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+      word.hidden = false;
+
+      if (!elemBelow) return;
+
+      const droppableBelow = elemBelow.closest('.row');
+      if (currentDroppable !== droppableBelow) {
+        if (currentDroppable) { // null when we were not over a droppable before this event
+          leaveDroppable(currentDroppable);
+        }
+        currentDroppable = droppableBelow;
+        if (currentDroppable) { // null if we're not coming over a droppable now
+          // (maybe just left the droppable)
+          enterDroppable(currentDroppable);
+        }
+      }
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    word.addEventListener('mouseup', () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      word.onmouseup = null;
+    });
+
+    word.addEventListener('dragstart', () => false);
+
+    if (WORDS.innerHTML === '') {
+      BUTTON_GIVE_UP.classList.add('none');
+      BUTTON_CHECK.classList.remove('none');
+    }
+  }
+})
+*/
 WORDS.addEventListener('click', event => {
   if (event.target.className === 'word') {
     FIELD.lastChild.append(event.target);
@@ -138,7 +214,25 @@ WORDS.addEventListener('click', event => {
   }
 })
 
+BUTTON_RESULTS.addEventListener('click', () => {
+  document.querySelector('.results .button-continue').addEventListener('click', () => {
+    GAME.classList.remove('none');
+    RESULTS.classList.add('none');
+    BUTTON_RESULTS.classList.add('none');
+    FIELD.innerHTML = '';
+    phraseNumber = 0;
+    PAGE.value = +PAGE.value + 1;
+    handleLevelsAndPagesChanges();
+    BUTTON_GIVE_UP.classList.remove('none');
+    BUTTON_CONTINUE.classList.add('none');
+    DONT_KNOW.innerHTML = '';
+    KNOW.innerHTML = '';
+  })
+  showResults(pageWords, phrasesGiveUp);
+})
+
 BUTTON_CONTINUE.addEventListener('click', () => {
+  console.log('continue');
   if (localStorage.getItem('translation') === 'false') {
     HINT_TRANSLATION.classList.add('hidden');
   }
@@ -147,21 +241,32 @@ BUTTON_CONTINUE.addEventListener('click', () => {
   }
   if (phraseNumber < 9) {
     phraseNumber += 1;
+    renderWords();
+    BUTTON_GIVE_UP.classList.remove('none');
+    BUTTON_CONTINUE.classList.add('none');
+  }
+  else if (phraseNumber === 9) {
+    phraseNumber += 1;
+    BUTTON_RESULTS.classList.remove('none');
   }
   else {
+    // GAME.classList.remove('none');
+    // RESULTS.classList.add('none');
+    BUTTON_RESULTS.classList.add('none');
     FIELD.innerHTML = '';
     phraseNumber = 0;
     PAGE.value = +PAGE.value + 1;
-    console.log(PAGE.value);
+    handleLevelsAndPagesChanges();
+    BUTTON_GIVE_UP.classList.remove('none');
+    BUTTON_CONTINUE.classList.add('none');
   }
-  BUTTON_GIVE_UP.classList.remove('none');
-  BUTTON_CONTINUE.classList.add('none');
-  handleLevelsAndPagesChanges();
+  // BUTTON_GIVE_UP.classList.remove('none');
+  // BUTTON_CONTINUE.classList.add('none');
 })
 
 BUTTON_CHECK.addEventListener('click', () => {
   let isCorrect = true;
-  const words =  [...FIELD.lastChild.querySelectorAll('.word')];
+  const words = [...FIELD.lastChild.querySelectorAll('.word')];
   words.forEach((word, ind) => {
     if (word.innerHTML === wordsArray[ind]) {
       console.log(word.innerHTML, 'green');
@@ -181,6 +286,7 @@ BUTTON_CHECK.addEventListener('click', () => {
         word.classList.remove('correct');
       });
     }, 2000);
+    showHints();
   }
   else {
     BUTTON_GIVE_UP.classList.remove('none');
@@ -188,6 +294,7 @@ BUTTON_CHECK.addEventListener('click', () => {
 })
 
 BUTTON_GIVE_UP.addEventListener('click', () => {
+  phrasesGiveUp.push(phraseNumber);
   WORDS.innerHTML = '';
   FIELD.lastChild.innerHTML = '';
   const fieldWidth = FIELD.clientWidth;
@@ -207,7 +314,9 @@ LEVEL.addEventListener('input', () => {
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CHECK.classList.add('none');
     BUTTON_CONTINUE.classList.add('none');
-    audio.pause();
+    if (audio !== undefined) {
+      audio.pause();
+    }
   }
   else {
     alert('Input level from 1 to 6');
@@ -221,7 +330,9 @@ PAGE.addEventListener('input', () => {
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CHECK.classList.add('none');
     BUTTON_CONTINUE.classList.add('none');
-    audio.pause();
+    if (audio !== undefined) {
+      audio.pause();
+    }
   }
   else {
     alert('Input page from 1 to 60');
