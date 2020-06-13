@@ -78,10 +78,20 @@ const showHints = () => {
     HINT_TRANSLATION.classList.remove('hidden');
     setTimeout(() => HINT_TRANSLATION.classList.add('hidden'), 3000);
   }
-  if (localStorage.getItem('automatic') === 'false' || localStorage.getItem('pronunciation') === 'false') {
-    localStorage.setItem('pronunciation', true);
-    playAudio();
-    localStorage.setItem('pronunciation', false);
+  if (localStorage.getItem('automatic') === 'false') {
+    if (localStorage.getItem('pronunciation') === 'false') {
+      localStorage.setItem('pronunciation', true);
+      playAudio();
+      localStorage.setItem('pronunciation', false);
+    }
+    else {
+      playAudio();
+    }
+  }
+  else if (localStorage.getItem('pronunciation') === 'false') {
+      localStorage.setItem('pronunciation', true);
+      playAudio();
+      localStorage.setItem('pronunciation', false);
   }
 }
 
