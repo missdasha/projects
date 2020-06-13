@@ -2,7 +2,8 @@
 /* eslint-disable no-alert */
 import '../css/style.css';
 import { LEVEL, PAGE, WORDS, FIELD, BUTTON_START, START_SCREEN, GAME, BUTTON_GIVE_UP, BUTTON_CHECK, BUTTON_CONTINUE,
-  HINT_TRANSLATION, BUTTON_TRANSLATION, BUTTON_DYNAMIC, BUTTON_SOUND, HINT_DYNAMIC, BUTTON_RESULTS, RESULTS, DONT_KNOW, KNOW } from './constants'
+  HINT_TRANSLATION, BUTTON_TRANSLATION, BUTTON_DYNAMIC, BUTTON_SOUND, HINT_DYNAMIC, BUTTON_RESULTS, RESULTS, 
+  DONT_KNOW, KNOW, PICTURE_INFO_PATH } from './constants'
 import showResults from './results'
 
 let pageWords = [];
@@ -130,6 +131,17 @@ const checkLastRound = () => {
   }
 }
 
+const tryAgain = (event) => {
+  console.log(event.target);
+  if (event.target.classList.contains('word')) {
+    WORDS.append(event.target);
+  }
+}
+
+const showPicture = () => {
+
+}
+
 HINT_DYNAMIC.addEventListener('click', () => {
   playAudio();
 })
@@ -228,8 +240,10 @@ WORDS.addEventListener('mousedown', event => {
   }
 })
 */
+
 WORDS.addEventListener('click', event => {
-  if (event.target.className === 'word') {
+  FIELD.lastChild.addEventListener('click', tryAgain);
+  if (event.target.classList.contains('word')) {
     FIELD.lastChild.append(event.target);
     if (WORDS.innerHTML === '') {
       BUTTON_GIVE_UP.classList.add('none');
@@ -271,6 +285,7 @@ BUTTON_CONTINUE.addEventListener('click', () => {
   }
   else if (phraseNumber === 9) {
     phraseNumber += 1;
+    showPicture();
     BUTTON_RESULTS.classList.remove('none');
     setLastRound();
     PAGE.value = +PAGE.value + 1;
@@ -300,18 +315,20 @@ BUTTON_CHECK.addEventListener('click', () => {
     }
   });
   if (isCorrect) {
+    FIELD.lastChild.removeEventListener('click', tryAgain);
     BUTTON_CHECK.classList.add('none');
     BUTTON_CONTINUE.classList.remove('none');
-    setTimeout(() => {
-      words.forEach(word => {
-        word.classList.remove('correct');
-      });
-    }, 2000);
     showHints();
   }
   else {
     BUTTON_GIVE_UP.classList.remove('none');
   }
+
+  setTimeout(() => {
+    words.forEach(word => {
+      word.classList.remove('correct', 'wrong');
+    });
+  }, 3000);
 })
 
 BUTTON_GIVE_UP.addEventListener('click', () => {
