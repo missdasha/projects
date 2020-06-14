@@ -209,7 +209,7 @@ input {
 }
 
 .results__phrases {
-    height: 330px;
+    height: 339px;
     overflow-y: scroll;
 }
 
@@ -247,6 +247,6 @@ input {
     height: 60px;
 }
 
-.results__picture img {
+.results__picture p {
     margin: 8px 0;
 }

@@ -23,12 +23,14 @@ const showResults = (pageWords, phrasesGiveUp, pictureInfo) => {
 PHRASES.addEventListener('click', event => {
     if (event.target.tagName === 'P' || event.target.className !== 'hint__dynamic' || event.target.tagName !== 'IMG') {
         const element = event.target.closest('[data-audio]');
-        const dynamic = element.firstChild;
-        dynamic.classList.add('active')
-        const path = element.getAttribute('data-audio');
-        const audio = new Audio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
-        audio.play();
-        audio.addEventListener('ended', () => dynamic.classList.remove('active'));
+        if (element.firstChild !== null) {
+            const dynamic = element.firstChild;
+            dynamic.classList.add('active');
+            const path = element.getAttribute('data-audio');
+            const audio = new Audio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
+            audio.play();
+            audio.addEventListener('ended', () => dynamic.classList.remove('active'));
+        }
     }
 })
 export default showResults;

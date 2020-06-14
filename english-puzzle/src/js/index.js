@@ -1,11 +1,10 @@
-/* eslint-disable no-inner-declarations */
 /* eslint-disable no-alert */
 import '../css/style.css';
 import { LEVEL, PAGE, WORDS, FIELD, BUTTON_START, START_SCREEN, GAME, BUTTON_GIVE_UP, BUTTON_CHECK, BUTTON_CONTINUE,
   HINT_TRANSLATION, BUTTON_TRANSLATION, BUTTON_DYNAMIC, BUTTON_SOUND, HINT_DYNAMIC, BUTTON_RESULTS, RESULTS, 
   DONT_KNOW, KNOW, PICTURES_PATH, PICTURE } from './constants'
 import showResults from './results'
-import paintings from './paintings1';
+import paintings from './paintings';
 
 let pageWords = [];
 let wordsArray = [];
@@ -16,9 +15,7 @@ const phrasesGiveUp = [];
 let pictureInfo;
 
 const playAudio = () => {
-  console.log(localStorage.getItem('pronunciation'));
   if (localStorage.getItem('pronunciation') === 'true') {
-    console.log(localStorage.getItem('pronunciation'));
     HINT_DYNAMIC.classList.add('active');
     const path = pageWords[phraseNumber].audioExample;
     audio = new Audio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
@@ -53,7 +50,6 @@ const renderWords = () => {
   let elements = '';
   const fieldWidth = FIELD.clientWidth;
   words.forEach(word => {
-    console.log(word, word.length);
     elements += `<div class="word" style="width:${fieldWidth * (word.length / phraseLength)}px">${word}</div>`
   });
   WORDS.innerHTML = elements;
@@ -69,7 +65,6 @@ const handleLevelsAndPagesChanges = async () => {
   const page = Math.ceil(round / 2) - 1;
 
   const words = await getWords(level, page);
-  console.log(words);
   pageWords = round % 2 === 0 ? words.slice(10) : words.slice(0, 10);
 
   renderWords();
@@ -105,9 +100,6 @@ const checkSavedOptions = () => {
     localStorage.setItem('translation', true);
     localStorage.setItem('pronunciation', true);
   }
-  console.log(localStorage.getItem('automatic'));
-  console.log(localStorage.getItem('translation'));
-  console.log(localStorage.getItem('pronunciation'));
   if (localStorage.getItem('automatic') === 'true') { 
     BUTTON_DYNAMIC.classList.add('chosen');
   }
@@ -127,14 +119,12 @@ const setLastRound = () => {
 const checkLastRound = () => {
   if (localStorage.getItem('last')) {
     const last = JSON.parse(localStorage.getItem('last'));
-    console.log(last.level, last.round);
     LEVEL.value = +last.level;
     PAGE.value = +last.round + 1;
   }
 }
 
 const tryAgain = (event) => {
-  console.log(event.target);
   if (event.target.classList.contains('word')) {
     WORDS.append(event.target);
   }
@@ -170,7 +160,6 @@ BUTTON_DYNAMIC.addEventListener('click', () => {
   BUTTON_DYNAMIC.classList.toggle('chosen');
   const isChosen = !(localStorage.getItem('automatic')  === 'true');
   localStorage.setItem('automatic', isChosen);
-  console.log(localStorage.getItem('automatic'));
   if (isChosen && localStorage.getItem('pronunciation') === 'true') {
     playAudio();
   }
@@ -182,75 +171,6 @@ BUTTON_TRANSLATION.addEventListener('click', () => {
   const isChosen = !(localStorage.getItem('translation')  === 'true');
   localStorage.setItem('translation', isChosen);
 })
-/*
-let currentDroppable = null;
-
-WORDS.addEventListener('mousedown', event => {
-  const word = event.target;
-  if (word.className === 'word') {
-    const shiftX = event.clientX - word.getBoundingClientRect().left;
-    const shiftY = event.clientY - word.getBoundingClientRect().top;
-
-    word.style.position = 'absolute';
-    word.style.zIndex = 1000;
-    document.body.append(word);
-
-    function moveAt(pageX, pageY) {
-      word.style.left = `${pageX - shiftX}px`;
-      word.style.top = `${pageY - shiftY}px`;
-    }
-
-    moveAt(event.pageX, event.pageY);
-
-    
-    function enterDroppable(elem) {
-      const el = elem;
-      el.style.background = 'pink';
-    }
-
-    function leaveDroppable(elem) {
-      const el = elem;
-      el.style.background = '';
-    }
-
-    function onMouseMove(e) {
-      moveAt(e.pageX, e.pageY);
-
-      word.hidden = true;
-      const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-      word.hidden = false;
-
-      if (!elemBelow) return;
-
-      const droppableBelow = elemBelow.closest('.row');
-      if (currentDroppable !== droppableBelow) {
-        if (currentDroppable) { // null when we were not over a droppable before this event
-          leaveDroppable(currentDroppable);
-        }
-        currentDroppable = droppableBelow;
-        if (currentDroppable) { // null if we're not coming over a droppable now
-          // (maybe just left the droppable)
-          enterDroppable(currentDroppable);
-        }
-      }
-    }
-
-    document.addEventListener('mousemove', onMouseMove);
-
-    word.addEventListener('mouseup', () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      word.onmouseup = null;
-    });
-
-    word.addEventListener('dragstart', () => false);
-
-    if (WORDS.innerHTML === '') {
-      BUTTON_GIVE_UP.classList.add('none');
-      BUTTON_CHECK.classList.remove('none');
-    }
-  }
-})
-*/
 
 WORDS.addEventListener('click', event => {
   FIELD.lastChild.addEventListener('click', tryAgain);
@@ -269,7 +189,6 @@ BUTTON_RESULTS.addEventListener('click', () => {
     BUTTON_RESULTS.classList.add('none');
     FIELD.innerHTML = '';
     phraseNumber = 0;
-    console.log(PAGE.value);
     handleLevelsAndPagesChanges();
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CONTINUE.classList.add('none');
@@ -277,13 +196,13 @@ BUTTON_RESULTS.addEventListener('click', () => {
     DONT_KNOW.innerHTML = '';
     KNOW.innerHTML = '';
     GAME.classList.remove('none');
+    HINT_DYNAMIC.classList.remove('hidden');
   });
   removePictureInfo();
   showResults(pageWords, phrasesGiveUp, pictureInfo);
 })
 
 BUTTON_CONTINUE.addEventListener('click', () => {
-  console.log('continue');
   if (localStorage.getItem('translation') === 'false') {
     HINT_TRANSLATION.classList.add('hidden');
   }
@@ -299,6 +218,8 @@ BUTTON_CONTINUE.addEventListener('click', () => {
   else if (phraseNumber === 9) {
     phraseNumber += 1;
     showPictureInfo();
+    HINT_TRANSLATION.innerHTML = '';
+    HINT_DYNAMIC.classList.add('hidden');
     BUTTON_RESULTS.classList.remove('none');
     setLastRound();
     PAGE.value = +PAGE.value + 1;
@@ -306,6 +227,7 @@ BUTTON_CONTINUE.addEventListener('click', () => {
   else {
     removePictureInfo();
     BUTTON_RESULTS.classList.add('none');
+    HINT_DYNAMIC.classList.remove('hidden');
     FIELD.innerHTML = '';
     phraseNumber = 0;
     handleLevelsAndPagesChanges();
@@ -319,11 +241,9 @@ BUTTON_CHECK.addEventListener('click', () => {
   const words = [...FIELD.lastChild.querySelectorAll('.word')];
   words.forEach((word, ind) => {
     if (word.innerHTML === wordsArray[ind]) {
-      console.log(word.innerHTML, 'green');
       word.classList.add('correct');
     }
     else {
-      console.log(word.innerHTML, 'red');
       word.classList.add('wrong');
       isCorrect = false;
     }
@@ -379,7 +299,6 @@ PAGE.addEventListener('change', () => {
   if (PAGE.value && +PAGE.value >= 1 && +PAGE.value <= 60) {
     handleLevelsAndPagesChanges();
     FIELD.innerHTML = '';
-    console.log(FIELD);
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CHECK.classList.add('none');
     BUTTON_CONTINUE.classList.add('none');
