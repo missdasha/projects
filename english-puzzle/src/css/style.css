@@ -73,11 +73,15 @@ input {
     width: 875px;
     height: 350px;
     border: 1px solid #dad8d8;
+    background-position: center center;
+    background-size: cover;
 }
 
 .row {
     height: 35px;
     display: flex;
+    opacity: 1;
+    transition: opacity 1s, visibility 0s;
 }
 
 .game__words {
@@ -159,6 +163,8 @@ input {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    opacity: 1;
+    transition: opacity 1s, visibility 0s;
 }
 
 .hint__dynamic {
@@ -172,7 +178,9 @@ input {
 }
 
 .hidden {
+    opacity: 0;
     visibility: hidden;
+    transition: opacity 1s, visibility 0s 1s;
 }
 
 .active {
@@ -201,7 +209,7 @@ input {
 }
 
 .results__phrases {
-    height: 380px;
+    height: 330px;
     overflow-y: scroll;
 }
 
@@ -213,20 +221,32 @@ input {
     margin-right: 10px;
 }
 
-.results__button .button-continue {
-    margin-top: 20px;
-    text-align: center;
+.results__button {
+    display: flex;
+    justify-content: center;
 }
 
-.canvas-item:not(:first-child) {
-    margin-left: -8px;
-  }
+.results__button .button-continue {
+    margin-top: 20px;
+}
 
-  .canvas-item {
-    height: 48px;
-    cursor: pointer;
-  }
+.picture-info {
+    color: grey;
+    align-items: center;
+    justify-content: center;
+}
 
-  .group-words {
+.results__picture {
     display: flex;
-  }
+    flex-direction: column;
+    align-items: center;
+}
+
+.results__picture img {
+    width: 100px;
+    height: 60px;
+}
+
+.results__picture img {
+    margin: 8px 0;
+}

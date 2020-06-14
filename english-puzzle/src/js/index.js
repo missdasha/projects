@@ -3,8 +3,9 @@
 import '../css/style.css';
 import { LEVEL, PAGE, WORDS, FIELD, BUTTON_START, START_SCREEN, GAME, BUTTON_GIVE_UP, BUTTON_CHECK, BUTTON_CONTINUE,
   HINT_TRANSLATION, BUTTON_TRANSLATION, BUTTON_DYNAMIC, BUTTON_SOUND, HINT_DYNAMIC, BUTTON_RESULTS, RESULTS, 
-  DONT_KNOW, KNOW, PICTURE_INFO_PATH } from './constants'
+  DONT_KNOW, KNOW, PICTURES_PATH, PICTURE } from './constants'
 import showResults from './results'
+import paintings from './paintings1';
 
 let pageWords = [];
 let wordsArray = [];
@@ -12,6 +13,7 @@ let phraseNumber = 0;
 let phraseLength;
 let audio;
 const phrasesGiveUp = [];
+let pictureInfo;
 
 const playAudio = () => {
   console.log(localStorage.getItem('pronunciation'));
@@ -138,8 +140,17 @@ const tryAgain = (event) => {
   }
 }
 
-const showPicture = () => {
+const showPictureInfo = () => {
+  pictureInfo = paintings[LEVEL.value - 1][PAGE.value - 1] || paintings[LEVEL.value - 1][0];
+  [...document.querySelectorAll('.row')].forEach(row => row.classList.add('hidden'));
+  FIELD.style.backgroundImage = `url(${PICTURES_PATH}${pictureInfo.cutSrc})`;
+  WORDS.innerText = `${pictureInfo.author} - ${pictureInfo.name}(${pictureInfo.year})`;
+  WORDS.classList.add('picture-info');
+}
 
+const removePictureInfo = () => {
+  FIELD.style.backgroundImage = '';
+  WORDS.classList.remove('picture-info');
 }
 
 HINT_DYNAMIC.addEventListener('click', () => {
@@ -262,11 +273,13 @@ BUTTON_RESULTS.addEventListener('click', () => {
     handleLevelsAndPagesChanges();
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CONTINUE.classList.add('none');
+    PICTURE.innerHTML = '';
     DONT_KNOW.innerHTML = '';
     KNOW.innerHTML = '';
     GAME.classList.remove('none');
-  })
-  showResults(pageWords, phrasesGiveUp);
+  });
+  removePictureInfo();
+  showResults(pageWords, phrasesGiveUp, pictureInfo);
 })
 
 BUTTON_CONTINUE.addEventListener('click', () => {
@@ -285,12 +298,13 @@ BUTTON_CONTINUE.addEventListener('click', () => {
   }
   else if (phraseNumber === 9) {
     phraseNumber += 1;
-    showPicture();
+    showPictureInfo();
     BUTTON_RESULTS.classList.remove('none');
     setLastRound();
     PAGE.value = +PAGE.value + 1;
   }
   else {
+    removePictureInfo();
     BUTTON_RESULTS.classList.add('none');
     FIELD.innerHTML = '';
     phraseNumber = 0;
@@ -345,7 +359,7 @@ BUTTON_GIVE_UP.addEventListener('click', () => {
   showHints();
 })
 
-LEVEL.addEventListener('input', () => {
+LEVEL.addEventListener('change', () => {
   if (LEVEL.value && +LEVEL.value >= 1 && +LEVEL.value <= 6) {
     handleLevelsAndPagesChanges();
     FIELD.innerHTML = '';
@@ -361,10 +375,11 @@ LEVEL.addEventListener('input', () => {
   }
 });
 
-PAGE.addEventListener('input', () => {
+PAGE.addEventListener('change', () => {
   if (PAGE.value && +PAGE.value >= 1 && +PAGE.value <= 60) {
     handleLevelsAndPagesChanges();
     FIELD.innerHTML = '';
+    console.log(FIELD);
     BUTTON_GIVE_UP.classList.remove('none');
     BUTTON_CHECK.classList.add('none');
     BUTTON_CONTINUE.classList.add('none');
@@ -377,7 +392,7 @@ PAGE.addEventListener('input', () => {
   }
 })
 
-BUTTON_START.addEventListener('click', () => {
+BUTTON_START.addEventListener('click', async () => {
   START_SCREEN.classList.add('none');
   GAME.classList.remove('none');
   checkLastRound();

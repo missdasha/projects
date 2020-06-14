@@ -1,8 +1,11 @@
-import  {GAME, RESULTS, DONT_KNOW, KNOW, PHRASES} from './constants'
+import  {GAME, RESULTS, DONT_KNOW, KNOW, PHRASES, PICTURE, PICTURES_PATH} from './constants'
 
-const showResults = (pageWords, phrasesGiveUp) => {
+const showResults = (pageWords, phrasesGiveUp, pictureInfo) => {
     GAME.classList.add('none');
     RESULTS.classList.remove('none');
+    const path = `${PICTURES_PATH}${pictureInfo.cutSrc}`;
+    PICTURE.insertAdjacentHTML('beforeend', `<a href="${path}" target="_blank"><img src="${path}"></a>`);
+    PICTURE.insertAdjacentHTML('beforeend', `<p>${pictureInfo.author} - ${pictureInfo.name}(${pictureInfo.year})</p>`);
     const audio = `<div class="hint__dynamic"><img src="img/icons8-dynamic.png"></div>`;
     pageWords.forEach((phrase, ind) => {
         const sentence = phrase.textExample.slice(0, -1).replace('<b>', '').replace('</b>', '');

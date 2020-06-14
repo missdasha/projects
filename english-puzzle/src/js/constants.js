@@ -18,4 +18,5 @@ export const HINT_DYNAMIC = document.querySelector('.hint__dynamic');
 export const DONT_KNOW = document.querySelector('.dont-know');
 export const KNOW = document.querySelector('.know');
 export const PHRASES = document.querySelector('.results__phrases');
-export const PICTURE_INFO_PATH = 'https://github.com/missdasha/rslang_data_paintings/blob/master/level';
+export const PICTURE = document.querySelector('.results__picture');
+export const PICTURES_PATH = 'https://raw.githubusercontent.com/missdasha/rslang_data_paintings/master/';
